@@ -35,7 +35,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import uk.ac.gla.peteryordanov.abbi_library.gatt_communication.ABBIGattAttributes;
+import uk.ac.gla.peteryordanov.abbi_library.gatt_communication.ABBIGattReadWriteCharacteristics;
 
 /**
  * Service for managing connection and data communication with a GATT server hosted on a
@@ -72,7 +72,7 @@ public class BluetoothLeService extends Service {
 
 
     //public final static UUID UUID_HEART_RATE_MEASUREMENT =
-    //        UUID.fromString(ABBIGattAttributes.HEART_RATE_MEASUREMENT);
+    //        UUID.fromString(ABBIGattReadWriteCharacteristics.HEART_RATE_MEASUREMENT);
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -166,7 +166,7 @@ public class BluetoothLeService extends Service {
         if (data != null && data.length > 0) {
             // log the characteristic data
             final StringBuilder stringBuilder = new StringBuilder(data.length);
-            stringBuilder.append(String.format("Received %s data: ", ABBIGattAttributes.lookup(uuid, "unknown")));
+            stringBuilder.append(String.format("Received %SOUND_STATE_ON_ID data: ", ABBIGattReadWriteCharacteristics.lookup(uuid, "unknown")));
             for(byte byteChar : data)
                 stringBuilder.append(String.format("%d ", byteChar));
             Log.d(TAG, stringBuilder.toString());
@@ -353,7 +353,7 @@ public class BluetoothLeService extends Service {
         // This is specific to Heart Rate Measurement.
         /*if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
-                    UUID.fromString(ABBIGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+                    UUID.fromString(ABBIGattReadWriteCharacteristics.CLIENT_CHARACTERISTIC_CONFIG));
             descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
             mBluetoothGatt.writeDescriptor(descriptor);
         }*/

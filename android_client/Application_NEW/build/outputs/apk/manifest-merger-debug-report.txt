@@ -40,7 +40,9 @@ MERGED from Application_NEW:abbi_library:unspecified:11:5
 		ADDED from AndroidManifest.xml:39:9
 	android:theme
 		ADDED from AndroidManifest.xml:41:9
-activity#com.lth.certec.abbi2.DeviceScanActivity
+	android:description
+		ADDED from Application_NEW:abbi_library:unspecified:13:9
+activity#com.lth.certec.abbi2.device.DeviceScanActivity
 ADDED from AndroidManifest.xml:42:9
 	android:label
 		ADDED from AndroidManifest.xml:44:13
@@ -56,7 +58,7 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:48:17
 	android:name
 		ADDED from AndroidManifest.xml:48:27
-activity#com.lth.certec.abbi2.DeviceControlActivity
+activity#com.lth.certec.abbi2.device.DeviceControlActivity
 ADDED from AndroidManifest.xml:51:9
 	android:name
 		ADDED from AndroidManifest.xml:52:13
@@ -68,7 +70,7 @@ ADDED from AndroidManifest.xml:54:9
 		ADDED from AndroidManifest.xml:56:13
 	android:name
 		ADDED from AndroidManifest.xml:55:13
-activity#com.lth.certec.abbi2.ContinuousActivity
+activity#com.lth.certec.abbi2.playback.ContinuousActivity
 ADDED from AndroidManifest.xml:58:9
 	android:label
 		ADDED from AndroidManifest.xml:60:13
@@ -84,7 +86,7 @@ ADDED from AndroidManifest.xml:63:13
 		ADDED from AndroidManifest.xml:64:17
 	android:value
 		ADDED from AndroidManifest.xml:65:17
-activity#com.lth.certec.abbi2.IntermittentActivity
+activity#com.lth.certec.abbi2.playback.IntermittentActivity
 ADDED from AndroidManifest.xml:67:9
 	android:label
 		ADDED from AndroidManifest.xml:69:13
@@ -94,7 +96,7 @@ ADDED from AndroidManifest.xml:67:9
 		ADDED from AndroidManifest.xml:68:13
 	android:launchMode
 		ADDED from AndroidManifest.xml:71:13
-activity#com.lth.certec.abbi2.PlaybackActivity
+activity#com.lth.certec.abbi2.playback.PlaybackActivity
 ADDED from AndroidManifest.xml:76:9
 	android:label
 		ADDED from AndroidManifest.xml:78:13

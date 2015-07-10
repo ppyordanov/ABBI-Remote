@@ -16,11 +16,6 @@
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/base-strings.xml -->
-    <eat-comment/>
-    <string name="app_name">ABBI2</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <string name="battery">Battery</string>
     <string name="ble_not_supported">BLE is not supported</string>
     <string name="bpm">BPM</string>
@@ -30,22 +25,17 @@
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
     <string name="hello_world">Hello world!</string>
     <string name="intermittent">Intermittent</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/base-strings.xml -->
-    <eat-comment/>
-    <string name="intro_message">
-        <![CDATA[
-        
-            
-            This application is used for obtaining and modifying parameters of an ABBI device.
-            
-        
-        ]]>
-    </string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <string name="label_data">Data:</string>
     <string name="label_device_address">Device address:</string>
     <string name="label_state">State:</string>
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/base-strings.xml -->
+    <eat-comment/>
+    <string name="library_description">
+        A library to be used in the ABBI (a bracelet designed for blind individuals) Android development process.
+    </string>
+    <string name="library_name">ABBI Android Library</string>
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/strings.xml -->
+    <eat-comment/>
     <string name="menu_connect">Connect</string>
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>

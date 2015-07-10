@@ -1,8 +1,0 @@
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\classes\debug
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-c9d94ee162585f5611ea4fd72ac9782833399124.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\support-annotations-21.0.2-b733c17e7887fdc81eb73449f567334419e95cd8.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-303870bb1a3a24ccf5a2eaf5b88f3a97c69c11a9.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-a3980abf5f6ac5404a1f140d2fe09e3907906910.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-a00ba01f3f06025b0dd06cfe86f15419431d2adb.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\internal_impl-21.0.2-abf7e8dc582f79d7b30b9c24fb6db5207d5e0b32.jar
-C:\Users\Peter Yordanov\Desktop\Ppyordanov's files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-4d6383874d5cbcfc672089e3bf6457c2765f3a4e.jar
