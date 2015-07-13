@@ -42,6 +42,8 @@ import com.lth.certec.abbi2.R;
 
 import java.util.ArrayList;
 
+import uk.ac.gla.peteryordanov.abbi_library.AboutDialogue;
+
 /**
  * Activity for scanning and displaying available Bluetooth LE devices.
  */
@@ -123,6 +125,10 @@ public class DeviceScanActivity extends ListActivity {
                 {
                     toggleExperimenterMode();
                 }
+                return true;
+            case R.id.menu_info:
+                AboutDialogue.show(DeviceScanActivity.this, getString(R.string.about),
+                        getString(R.string.close));
                 return true;
         }
         return super.onOptionsItemSelected(item);
