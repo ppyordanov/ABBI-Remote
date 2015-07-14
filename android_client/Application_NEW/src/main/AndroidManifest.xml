@@ -15,7 +15,7 @@
  limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lth.certec.abbi2"
+    package="proj.abbi"
     android:versionCode="2"
     android:versionName="1.2" >
 
@@ -53,14 +53,14 @@
             android:launchMode="singleTask" />
 
         <service
-            android:name="uk.ac.gla.peteryordanov.abbi_library.BluetoothLeService"
+            android:name="uk.ac.gla.abbi.abbi_library.BluetoothLeService"
             android:enabled="true" />
 
         <activity
-            android:name=".playback.ContinuousActivity"
+            android:name="proj.abbi.playback.ContinuousActivity"
             android:label="@string/title_activity_continuous"
             android:launchMode="singleTask"
-            android:parentActivityName=".device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
@@ -69,7 +69,7 @@
             android:name=".playback.IntermittentActivity"
             android:label="@string/title_activity_intermittent"
             android:launchMode="singleTask"
-            android:parentActivityName=".device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />

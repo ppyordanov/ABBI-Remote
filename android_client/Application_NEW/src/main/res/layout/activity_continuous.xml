@@ -1,3 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/firstLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/pitch"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewFreq"
+            android:layout_column="0" />
+        <proj.abbi.CircularSeekBar
+            android:layout_height="250dp"
+            android:layout_width="match_parent"
+            android:id="@+id/seekBarContFreq"
+            android:max="35"
+            android:progress="1" />
+
+
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewInd1" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/secondView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/thirdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:text="@string/volume"
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewVol"
+            android:gravity="center" />
+
+        <proj.abbi.CircularSeekBar
+            android:layout_height="250dp"
+            android:layout_width="match_parent"
+            android:id="@+id/seekBarContVol"
+            android:max="15"
+            android:progress="1" />
+
+        <TextView
+            android:layout_height="50dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textViewInd2" />
+    </LinearLayout>
+
+    <Button
+        android:text="@string/save"
+        android:id="@+id/buttonContSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
+
+<!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -20,11 +106,16 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textViewFreq"
                 android:layout_column="0" />
-            <SeekBar
+            <proj.abbi.CircularSeekBar
                 android:id="@+id/seekBarContFreq"
                 android:layout_column="1"
                 android:max="35"
                 android:progress="1" />
+            <TextView
+                android:text="@string/pitch"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView1"
+                android:layout_column="0" />
         </TableRow>
         <TableRow
             android:id="@+id/tableRow2">
@@ -33,7 +124,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/textViewVol"
                 android:layout_column="0" />
-            <SeekBar
+            <proj.abbi.CircularSeekBar
                 android:id="@+id/seekBarContVol"
                 android:layout_column="1"
                 android:max="15"
@@ -46,3 +137,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
+
+-->

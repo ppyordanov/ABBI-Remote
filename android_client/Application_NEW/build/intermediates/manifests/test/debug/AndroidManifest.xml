@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lth.certec.abbi2.test">
+    package="proj.abbi.test">
 
     <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="21" />
 
@@ -9,8 +9,8 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="com.lth.certec.abbi2"
+                     android:targetPackage="proj.abbi"
                      android:handleProfiling="false"
                      android:functionalTest="false"
-                     android:label="Tests for com.lth.certec.abbi2"/>
+                     android:label="Tests for proj.abbi"/>
 </manifest>

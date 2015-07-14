@@ -15,7 +15,7 @@
  limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.lth.certec.abbi2"
+    package="proj.abbi"
     android:versionCode="2"
     android:versionName="1.2" >
 
@@ -46,7 +46,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
         <activity
-            android:name="com.lth.certec.abbi2.device.DeviceScanActivity"
+            android:name="proj.abbi.device.DeviceScanActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -55,36 +55,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.lth.certec.abbi2.device.DeviceControlActivity"
+            android:name="proj.abbi.device.DeviceControlActivity"
             android:launchMode="singleTask" />
 
         <service
-            android:name="uk.ac.gla.peteryordanov.abbi_library.BluetoothLeService"
+            android:name="uk.ac.gla.abbi.abbi_library.BluetoothLeService"
             android:enabled="true" />
 
         <activity
-            android:name="com.lth.certec.abbi2.playback.ContinuousActivity"
+            android:name="proj.abbi.playback.ContinuousActivity"
             android:label="@string/title_activity_continuous"
             android:launchMode="singleTask"
-            android:parentActivityName="com.lth.certec.abbi2.device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
         </activity>
         <activity
-            android:name="com.lth.certec.abbi2.playback.IntermittentActivity"
+            android:name="proj.abbi.playback.IntermittentActivity"
             android:label="@string/title_activity_intermittent"
             android:launchMode="singleTask"
-            android:parentActivityName="com.lth.certec.abbi2.device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
         </activity>
         <activity
-            android:name="com.lth.certec.abbi2.playback.PlaybackActivity"
+            android:name="proj.abbi.playback.PlaybackActivity"
             android:label="@string/title_activity_playback"
             android:launchMode="singleTask"
-            android:parentActivityName="com.lth.certec.abbi2.device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />

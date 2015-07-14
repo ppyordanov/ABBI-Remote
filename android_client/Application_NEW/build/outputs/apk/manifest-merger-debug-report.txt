@@ -44,7 +44,7 @@ MERGED from com.android.support:support-v4:22.2.0:22:5
 		ADDED from AndroidManifest.xml:41:9
 	android:description
 		ADDED from Application_NEW:abbi_library:unspecified:13:9
-activity#com.lth.certec.abbi2.device.DeviceScanActivity
+activity#proj.abbi.device.DeviceScanActivity
 ADDED from AndroidManifest.xml:42:9
 	android:label
 		ADDED from AndroidManifest.xml:44:13
@@ -60,19 +60,19 @@ category#android.intent.category.LAUNCHER
 ADDED from AndroidManifest.xml:48:17
 	android:name
 		ADDED from AndroidManifest.xml:48:27
-activity#com.lth.certec.abbi2.device.DeviceControlActivity
+activity#proj.abbi.device.DeviceControlActivity
 ADDED from AndroidManifest.xml:51:9
 	android:name
 		ADDED from AndroidManifest.xml:52:13
 	android:launchMode
 		ADDED from AndroidManifest.xml:53:13
-service#uk.ac.gla.peteryordanov.abbi_library.BluetoothLeService
+service#uk.ac.gla.abbi.abbi_library.BluetoothLeService
 ADDED from AndroidManifest.xml:55:9
 	android:enabled
 		ADDED from AndroidManifest.xml:57:13
 	android:name
 		ADDED from AndroidManifest.xml:56:13
-activity#com.lth.certec.abbi2.playback.ContinuousActivity
+activity#proj.abbi.playback.ContinuousActivity
 ADDED from AndroidManifest.xml:59:9
 	android:label
 		ADDED from AndroidManifest.xml:61:13
@@ -88,7 +88,7 @@ ADDED from AndroidManifest.xml:64:13
 		ADDED from AndroidManifest.xml:65:17
 	android:value
 		ADDED from AndroidManifest.xml:66:17
-activity#com.lth.certec.abbi2.playback.IntermittentActivity
+activity#proj.abbi.playback.IntermittentActivity
 ADDED from AndroidManifest.xml:68:9
 	android:label
 		ADDED from AndroidManifest.xml:70:13
@@ -98,7 +98,7 @@ ADDED from AndroidManifest.xml:68:9
 		ADDED from AndroidManifest.xml:69:13
 	android:launchMode
 		ADDED from AndroidManifest.xml:71:13
-activity#com.lth.certec.abbi2.playback.PlaybackActivity
+activity#proj.abbi.playback.PlaybackActivity
 ADDED from AndroidManifest.xml:77:9
 	android:label
 		ADDED from AndroidManifest.xml:79:13

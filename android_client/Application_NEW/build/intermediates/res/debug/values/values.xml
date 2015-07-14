@@ -81,6 +81,7 @@
     <declare-styleable name="AlertDialog"><attr name="android:layout"/><attr format="reference" name="buttonPanelSideLayout"/><attr format="reference" name="listLayout"/><attr format="reference" name="multiChoiceItemLayout"/><attr format="reference" name="singleChoiceItemLayout"/><attr format="reference" name="listItemLayout"/></declare-styleable>
     <declare-styleable name="AppCompatTextView"><attr format="reference|boolean" name="textAllCaps"/><attr name="android:textAppearance"/></declare-styleable>
     <declare-styleable name="CardView"><attr format="color" name="cardBackgroundColor"/><attr format="dimension" name="cardCornerRadius"/><attr format="dimension" name="cardElevation"/><attr format="dimension" name="cardMaxElevation"/><attr format="boolean" name="cardUseCompatPadding"/><attr format="boolean" name="cardPreventCornerOverlap"/><attr format="dimension" name="contentPadding"/><attr format="dimension" name="contentPaddingLeft"/><attr format="dimension" name="contentPaddingRight"/><attr format="dimension" name="contentPaddingTop"/><attr format="dimension" name="contentPaddingBottom"/></declare-styleable>
+    <declare-styleable name="CircularSeekBar"><attr format="integer" name="progress"/><attr format="integer" name="max"/><attr format="boolean" name="move_outside_circle"/><attr format="boolean" name="maintain_equal_circle"/><attr format="boolean" name="use_custom_radii"/><attr format="boolean" name="lock_enabled"/><attr format="float" name="circle_x_radius"/><attr format="float" name="circle_y_radius"/><attr format="float" name="circle_stroke_width"/><attr format="float" name="pointer_radius"/><attr format="float" name="pointer_halo_width"/><attr format="float" name="pointer_halo_border_width"/><attr format="string" name="circle_color"/><attr format="string" name="circle_progress_color"/><attr format="string" name="pointer_color"/><attr format="string" name="pointer_halo_color"/><attr format="string" name="pointer_halo_color_ontouch"/><attr format="integer" name="pointer_alpha_ontouch"/><attr format="float" name="start_angle"/><attr format="float" name="end_angle"/><attr format="string" name="circle_fill"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="topBottomBarArrowSize"/><attr format="dimension" name="middleBarArrowSize"/><attr format="dimension" name="barSize"/><attr format="dimension" name="thickness"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat"><attr name="android:orientation"/><attr name="android:gravity"/><attr name="android:baselineAligned"/><attr name="android:baselineAlignedChildIndex"/><attr name="android:weightSum"/><attr format="boolean" name="measureWithLargestChild"/><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
@@ -158,7 +159,7 @@
     <dimen name="abc_text_size_subtitle_material_toolbar">16dp</dimen>
     <dimen name="abc_text_size_title_material">20sp</dimen>
     <dimen name="abc_text_size_title_material_toolbar">20dp</dimen>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -225,11 +226,10 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="about"><![CDATA[
                                 <p><a href="https://www.abbiproject.eu/">www.abbiproject.eu</a></p>
-
                                 <i>An Android application used to control the ABBI bracelet developed by IIT
                                  (Italian Institute of Technology). The project will follow the client-server software development paradigm.
                                   The server is going to be tied to a central data store and communicate with the Android app via a REST API.</i>]]></string>
@@ -237,7 +237,7 @@
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/base-strings.xml -->
     <eat-comment/>
     <string name="app_name">ABBI2</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="battery">Battery</string>
     <string name="ble_not_supported">BLE is not supported</string>
@@ -247,7 +247,6 @@
     <string name="continuous">Continuous</string>
     <string name="disconnected">Disconnected</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
-    <string name="hello_world">Hello world!</string>
     <string name="intermittent">Intermittent</string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/base-strings.xml -->
     <eat-comment/>
@@ -260,19 +259,15 @@
         
         ]]>
     </string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="label_data">Data:</string>
     <string name="label_device_address">Device address:</string>
     <string name="label_state">State:</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
-    <eat-comment/>
     <string name="library_description">
         A library to be used in the ABBI (a bracelet designed for blind individuals) Android development process.
     </string>
     <string name="library_name">ABBI Android Library</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
-    <eat-comment/>
     <string name="menu_connect">Connect</string>
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_info">About</string>
@@ -289,7 +284,7 @@
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
-    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="stream1">Stream 1</string>
     <string name="stream2">Stream 2</string>
