@@ -13,11 +13,16 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,239 +31,253 @@
         android:id="@+id/linearLayoutInfo">
 
         <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_device_address"
-                      android:textSize="18sp"
-                android:visibility="visible" />
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/device_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"/>
-        </LinearLayout>
-
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_state"
-                      android:textSize="18sp"/>
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/connection_state"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:text="@string/disconnected"
-                      android:textSize="18sp"/>
-        </LinearLayout>
-
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_data"
-                      android:textSize="18sp"/>
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/data_value"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:text="@string/no_data"
-                      android:textSize="18sp"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutBattery"
-        android:layout_margin="5dp">
-        <ImageView
-            android:src="@drawable/ic_battery_full"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:id="@+id/iconBattery"
-            android:adjustViewBounds="true" />
-        <ImageView
-            android:src="@anim/battery_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:id="@+id/animBattery"
-            android:visibility="gone" />
-        <TextView
-            android:text="@string/battery"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="36dip"
-            android:id="@+id/linearLayout4"
-            android:background="@android:drawable/progress_horizontal"
-            android:paddingRight="10dp"
-            android:paddingLeft="10dp"
-            android:layout_gravity="center_vertical">
-            <View
-                android:layout_weight="0.25"
-                android:background="@drawable/roundrectred"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-            <View
-                android:layout_weight="0.25"
-                android:background="@drawable/roundrectyell"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view2"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-            <View
-                android:layout_weight="0.25"
-                android:background="@drawable/roundrectgreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view3"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp" />
-            <View
-                android:layout_weight="0.25"
-                android:background="@drawable/roundrectgreen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/view4"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:alpha="0" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutMute"
-        android:layout_margin="10dp">
-        <ImageView
-            android:src="@drawable/mute"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:id="@+id/iconPower" />
-        <Switch
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/switch1"
-            android:text="@string/mute"
-            android:checked="false"
-            android:layout_marginLeft="10dp" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutVolume"
-        android:layout_margin="10dp">
-        <ImageView
-            android:src="@drawable/volume"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true" />
-        <TextView
-            android:text="@string/volume"
-            android:gravity="center"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView2"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:textAlignment="center" />
-        <SeekBar
-            android:id="@+id/seekBar1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="15"
-            android:progress="1"
-            android:fitsSystemWindows="true"
-            android:layout_gravity="center_vertical" />
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutAudioMode">
-        <TextView
-            android:text="@string/mode"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/textView3"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="5dp" />
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/radioGroup1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
-            <RadioButton
-                android:layout_width="wrap_content"
+            android:layout_margin="10dp">
+            <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/continuous"
-                android:id="@+id/radioSoundContinuous" />
-            <RadioButton
-                android:layout_width="wrap_content"
+                android:text="@string/label_device_address"
+                android:textSize="18sp"
+                android:visibility="visible" />
+            <Space android:layout_width="5dp"
+                android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/device_address"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/intermittent"
-                android:id="@+id/radioSoundIntermmitent" />
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/playback"
-                android:id="@+id/radioSoundPlayback" />
-        </RadioGroup>
-        <Button
-            android:text="@string/properties"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/buttonSoundProperties" />
-    </LinearLayout>
-    <ToggleButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/toggleButton1"
-        android:background="@drawable/red_button"
-        android:layout_margin="25dp"
-        android:minHeight="120dp" />
+                android:textSize="18sp"/>
+        </LinearLayout>
 
-</LinearLayout><!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/layout/activity_device_control.xml -->
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_state"
+                android:textSize="18sp"/>
+            <Space android:layout_width="5dp"
+                android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/connection_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disconnected"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_data"
+                android:textSize="18sp"/>
+            <Space android:layout_width="5dp"
+                android:layout_height="wrap_content"/>
+            <TextView android:id="@+id/data_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/firstLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal">
+
+
+            <ProgressBar
+                android:gravity="center"
+                android:id="@+id/progressBar"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:indeterminate="false"
+                android:progress="100"
+                android:max="100"
+                android:secondaryProgress="100"
+                android:progressDrawable="@drawable/progress_bar"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:text="@string/battery"
+                android:gravity="center"
+                android:layout_alignBottom="@id/progressBar"
+                android:layout_alignLeft="@id/progressBar"
+                android:layout_alignRight="@id/progressBar"
+                android:layout_alignTop="@id/progressBar"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:id="@+id/PBtextView"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
+
+
+
+            <Switch
+                android:width="200dp"
+                android:textOn="Sound On"
+                android:textOff="Sound Off"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:id="@+id/soundOnOffSwitch"
+                android:minHeight="120dp"
+                android:checked="false"
+                android:layout_below="@+id/progressBar"
+                android:layout_centerHorizontal="true"/>
+
+            <Switch
+                android:width="200dp"
+                android:layout_height="80dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:textOff="Mute Off"
+                android:textOn="Mute On"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
+                android:id="@+id/muteSwitch"
+                android:checked="false"
+                android:layout_below="@+id/progressBar"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/secondView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:id="@+id/thirdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearLayoutVolume"
+                android:layout_margin="10dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center">
+                    <proj.abbi.CircularSeekBar
+                        android:id="@+id/seekBarVol"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:max="15"
+                        android:progress="1"
+                        android:fitsSystemWindows="true"
+                        android:layout_gravity="center_vertical" />
+
+                    <TextView
+                        android:id="@+id/textViewVol"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_alignBottom="@id/seekBarVol"
+                        android:layout_alignLeft="@id/seekBarVol"
+                        android:layout_alignRight="@id/seekBarVol"
+                        android:layout_alignTop="@id/seekBarVol"
+                        android:background="#00000000"
+                        android:gravity="center"
+                        android:text="@string/volume"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/linearLayoutAudioMode"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/linearLayoutVolume"
+                android:layout_alignParentStart="false"
+                android:gravity="center">
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/radioGroup1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/continuous"
+                        android:id="@+id/radioSoundContinuous" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/intermittent"
+                        android:id="@+id/radioSoundIntermmitent" />
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/playback"
+                        android:id="@+id/radioSoundPlayback" />
+                </RadioGroup>
+                <Button
+                    android:text="@string/properties"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/buttonSoundProperties"
+                    android:background="@drawable/custom_button"
+                    android:textColor="#fff"/>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+
+
+
+
+
+<!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/layout/activity_device_control.xml -->

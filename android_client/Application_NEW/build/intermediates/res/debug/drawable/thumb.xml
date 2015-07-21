@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/gray_track" android:state_enabled="false" />
+    <item android:drawable="@drawable/color_thumb" android:state_pressed="true" />
+    <item android:drawable="@drawable/color_thumb" android:state_checked="true" />
+    <item android:drawable="@drawable/gray_track" />
+</selector><!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/drawable/thumb.xml -->

@@ -56,6 +56,7 @@
         </activity>
         <activity
             android:name="proj.abbi.device.DeviceControlActivity"
+            android:label="@string/device_control"
             android:launchMode="singleTask" />
 
         <service
@@ -75,7 +76,8 @@
             android:name="proj.abbi.playback.IntermittentActivity"
             android:label="@string/title_activity_intermittent"
             android:launchMode="singleTask"
-            android:parentActivityName="proj.abbi.device.DeviceControlActivity" >
+            android:parentActivityName="proj.abbi.device.DeviceControlActivity"
+            android:screenOrientation="portrait" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
@@ -88,6 +90,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
+        </activity>
+        <activity
+            android:name="proj.abbi.device.AdvancedOptionsActivity"
+            android:label="@string/title_activity_advanced_options"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".device.AdvancedOptionsActivity" />
         </activity>
     </application>
 

@@ -3,15 +3,19 @@ package proj.abbi.playback;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.SeekBar;
+import android.widget.TextView;
 
+import proj.abbi.CircleSeekBarListener;
+import proj.abbi.CircularSeekBar;
 import proj.abbi.R;
 
+import uk.ac.gla.abbi.abbi_library.AboutDialogue;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.ABBIGattReadWriteCharacteristics;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioIntermittent;
 import uk.ac.gla.abbi.abbi_library.utilities.Globals;
@@ -20,20 +24,20 @@ import uk.ac.gla.abbi.abbi_library.utilities.UtilityFunctions;
 
 public class IntermittentActivity extends Activity {
 
-    private SeekBar _freqBar1;
-    private SeekBar _volBar1;
-    private SeekBar _freqBar2;
-    private SeekBar _volBar2;
-    private SeekBar _bpmBar;
+    private CircularSeekBar frequencyBar1;
+    private CircularSeekBar volumeBar1;
+    private CircularSeekBar frequencyBar2;
+    private CircularSeekBar volumeBar2;
+    private CircularSeekBar bpmBar;
 
 
-    private CheckBox _lockRatio;
+    private CheckBox lockRatio;
 
     private AudioIntermittent ai1;
     private AudioIntermittent ai2;
-    private int _currentBpm;
+    private int currentBpm;
 
-    private Button _saveButton;
+    private Button saveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,37 +48,43 @@ public class IntermittentActivity extends Activity {
 
         ai1 = new AudioIntermittent(Globals.audioStream1.getByteArray());
         ai2 = new AudioIntermittent(Globals.audioStream2.getByteArray());
-        _currentBpm = Globals.audioBPM;
+        currentBpm = Globals.audioBPM;
 
-        _freqBar1 = (SeekBar) findViewById(R.id.seekBarStream1Freq);
-        _volBar1 = (SeekBar) findViewById(R.id.seekBarStream1Vol);
-        _freqBar2 = (SeekBar) findViewById(R.id.seekBarStream2Freq);
-        _volBar2 = (SeekBar) findViewById(R.id.seekBarStream2Vol);
-        _bpmBar = (SeekBar) findViewById(R.id.seekBarBpm);
-        _saveButton = (Button) findViewById(R.id.buttonIntermSave);
+        frequencyBar1 = (CircularSeekBar) findViewById(R.id.seekBarStream1Freq);
+        volumeBar1 = (CircularSeekBar) findViewById(R.id.seekBarStream1Vol);
+        frequencyBar2 = (CircularSeekBar) findViewById(R.id.seekBarStream2Freq);
+        volumeBar2 = (CircularSeekBar) findViewById(R.id.seekBarStream2Vol);
+        bpmBar = (CircularSeekBar) findViewById(R.id.seekBarBpm);
+        saveButton = (Button) findViewById(R.id.buttonIntermSave);
 
-        _lockRatio =(CheckBox)findViewById(R.id.lockRatioCheckBox);
+        frequencyBar1.setMax(Globals.UI_FREQUENCY_RANGE_MAX);
+        volumeBar1.setMax(Globals.UI_VOLUME_RANGE_MAX);
+        frequencyBar2.setMax(Globals.UI_FREQUENCY_RANGE_MAX);
+        volumeBar2.setMax(Globals.UI_VOLUME_RANGE_MAX);
+        bpmBar.setMax(Globals.NEW_BPM_RANGE_MAX);
 
-        _freqBar1.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai1.getFreq(), Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX));
-        _volBar1.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai1.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
-        _freqBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getFreq(), Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX));
-        _volBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
-        _bpmBar.setProgress(UtilityFunctions.changeRangeMaintainingRatio(_currentBpm, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX, Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX));
-        _saveButton.setVisibility(View.GONE);
+        lockRatio =(CheckBox)findViewById(R.id.lockRatioCheckBox);
 
-        _freqBar1.setOnSeekBarChangeListener(handleProgressChanged);
-        _volBar1.setOnSeekBarChangeListener(handleProgressChanged);
-        _freqBar2.setOnSeekBarChangeListener(handleProgressChanged);
-        _volBar2.setOnSeekBarChangeListener(handleProgressChanged);
-        _bpmBar.setOnSeekBarChangeListener(handleProgressChanged);
-        _saveButton.setOnClickListener(handleSaveClick);
+        frequencyBar1.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai1.getFreq(), Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX));
+        volumeBar1.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai1.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
+        frequencyBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getFreq(), Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX));
+        volumeBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
+        bpmBar.setProgress(UtilityFunctions.changeRangeMaintainingRatio(currentBpm, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX, Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX));
+        saveButton.setVisibility(View.GONE);
+
+        frequencyBar1.setOnSeekBarChangeListener(handleProgressChanged);
+        volumeBar1.setOnSeekBarChangeListener(handleProgressChanged);
+        frequencyBar2.setOnSeekBarChangeListener(handleProgressChanged);
+        volumeBar2.setOnSeekBarChangeListener(handleProgressChanged);
+        bpmBar.setOnSeekBarChangeListener(handleProgressChanged);
+        saveButton.setOnClickListener(handleSaveClick);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_intermittent, menu);
+        getMenuInflater().inflate(R.menu.menu_intermittent, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -86,7 +96,9 @@ public class IntermittentActivity extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.menu_info) {
+            AboutDialogue.show(IntermittentActivity.this, getString(R.string.about),
+                    getString(R.string.close));
             return true;
         }
 
@@ -104,7 +116,7 @@ public class IntermittentActivity extends Activity {
             Globals.audioStream1.setVolume(ai1.getVolume());
             Globals.audioStream2.setFreq(ai2.getFreq());
             Globals.audioStream2.setVolume(ai2.getVolume());
-            Globals.audioBPM = _currentBpm;
+            Globals.audioBPM = currentBpm;
             setResult(RESULT_OK, myIntent);
             finish();
         }
@@ -119,63 +131,86 @@ public class IntermittentActivity extends Activity {
         Globals.audioStream1.setVolume(ai1.getVolume());
         Globals.audioStream2.setFreq(ai2.getFreq());
         Globals.audioStream2.setVolume(ai2.getVolume());
-        Globals.audioBPM = _currentBpm;
+        Globals.audioBPM = currentBpm;
         setResult(RESULT_OK, myIntent);
         finish();
     }
 
-    private SeekBar.OnSeekBarChangeListener handleProgressChanged = new SeekBar.OnSeekBarChangeListener()
+    private CircularSeekBar.OnCircularSeekBarChangeListener handleProgressChanged = new CircleSeekBarListener()
     {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        public void onProgressChanged(CircularSeekBar seekBar, int progress, boolean fromUser) {
+
+
+            if (seekBar.equals(frequencyBar1)) {
+                TextView text = (TextView)findViewById(R.id.textViewIndS1F);
+                text.setText(Html.fromHtml("Stream 1<br><b>" + (progress * 100) / Globals.UI_FREQUENCY_RANGE_MAX + " %</b>"));
+            }
+            else if (seekBar.equals(frequencyBar2)){
+                TextView text = (TextView)findViewById(R.id.textViewIndS2F);
+                text.setText(Html.fromHtml("Stream 2<br><b>" + (progress * 100) / Globals.UI_FREQUENCY_RANGE_MAX + " %</b>"));
+
+            }
+            else if (seekBar.equals(volumeBar1)) {
+                TextView text = (TextView)findViewById(R.id.textViewIndS1V);
+                text.setText(Html.fromHtml("Stream 1<br><b>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
+            }
+            else if (seekBar.equals(volumeBar2)){
+                TextView text = (TextView)findViewById(R.id.textViewIndS2V);
+                text.setText(Html.fromHtml("Stream 2<br><b>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
+            }
+            else  {
+                TextView text = (TextView)findViewById(R.id.textViewIndBPM);
+                text.setText(Html.fromHtml("<b>" + (progress*100)/Globals.NEW_BPM_RANGE_MAX + " %</b>"));
+            }
         }
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
+        public void onStartTrackingTouch(CircularSeekBar seekBar) {
         }
         @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
-            if (seekBar.equals(_freqBar1)) {
-                ai1.setFreq(UtilityFunctions.changeRangeMaintainingRatio(_freqBar1.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
+        public void onStopTrackingTouch(CircularSeekBar seekBar) {
+            if (seekBar.equals(frequencyBar1)) {
+                ai1.setFreq(UtilityFunctions.changeRangeMaintainingRatio(frequencyBar1.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
-                if (_lockRatio.isChecked()){
+                if (lockRatio.isChecked()){
                     ai2.setFreq(ai1.getFreq());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
-                    _freqBar2.setProgress(_freqBar1.getProgress());
+                    frequencyBar2.setProgress(frequencyBar1.getProgress());
                 }
             }
-            else if (seekBar.equals(_freqBar2)){
-                ai2.setFreq(UtilityFunctions.changeRangeMaintainingRatio(_freqBar2.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
+            else if (seekBar.equals(frequencyBar2)){
+                ai2.setFreq(UtilityFunctions.changeRangeMaintainingRatio(frequencyBar2.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
-                if (_lockRatio.isChecked()){
+                if (lockRatio.isChecked()){
                     ai1.setFreq(ai2.getFreq());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
-                    _freqBar1.setProgress(_freqBar2.getProgress());
+                    frequencyBar1.setProgress(frequencyBar2.getProgress());
                 }
 
             }
-            else if (seekBar.equals(_volBar1)) {
-                ai1.setVolume(UtilityFunctions.changeRangeMaintainingRatio(_volBar1.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
+            else if (seekBar.equals(volumeBar1)) {
+                ai1.setVolume(UtilityFunctions.changeRangeMaintainingRatio(volumeBar1.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
-                if (_lockRatio.isChecked()){
+                if (lockRatio.isChecked()){
                     ai2.setVolume(ai1.getVolume());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
-                    _volBar2.setProgress(_volBar1.getProgress());
+                    volumeBar2.setProgress(volumeBar1.getProgress());
                 }
 
             }
-            else if (seekBar.equals(_volBar2)){
-                ai2.setVolume(UtilityFunctions.changeRangeMaintainingRatio(_volBar2.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
+            else if (seekBar.equals(volumeBar2)){
+                ai2.setVolume(UtilityFunctions.changeRangeMaintainingRatio(volumeBar2.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
-                if (_lockRatio.isChecked()){
+                if (lockRatio.isChecked()){
                     ai1.setVolume(ai2.getVolume());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
-                    _volBar1.setProgress(_volBar2.getProgress());
+                    volumeBar1.setProgress(volumeBar2.getProgress());
                 }
 
             }
-            else if (seekBar.equals(_bpmBar)) {
-                _currentBpm = UtilityFunctions.changeRangeMaintainingRatio(seekBar.getProgress(),  Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX);
-                ABBIGattReadWriteCharacteristics.writeIntermittentBPM(_currentBpm);
+            else{
+                currentBpm = UtilityFunctions.changeRangeMaintainingRatio(seekBar.getProgress(),  Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX);
+                ABBIGattReadWriteCharacteristics.writeIntermittentBPM(currentBpm);
             }
         }
     };

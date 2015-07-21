@@ -55,21 +55,21 @@ public class CircularSeekBar extends View {
 	private final float MIN_TOUCH_TARGET_DP = 48;
 
 	// Default values
-	private static final float DEFAULT_CIRCLE_X_RADIUS = 90f;
-	private static final float DEFAULT_CIRCLE_Y_RADIUS = 90f;
-	private static final float DEFAULT_POINTER_RADIUS = 7f;
-	private static final float DEFAULT_POINTER_HALO_WIDTH = 6f;
-	private static final float DEFAULT_POINTER_HALO_BORDER_WIDTH = 2f;
+	private static final float DEFAULT_CIRCLE_X_RADIUS = 120f;
+	private static final float DEFAULT_CIRCLE_Y_RADIUS = 120f;
+	private static final float DEFAULT_POINTER_RADIUS = 8f;
+	private static final float DEFAULT_POINTER_HALO_WIDTH = 8f;
+	private static final float DEFAULT_POINTER_HALO_BORDER_WIDTH = 5f;
 	private static final float DEFAULT_CIRCLE_STROKE_WIDTH = 12f;
 	private static final float DEFAULT_START_ANGLE = 270f; // Geometric (clockwise, relative to 3 o'clock)
 	private static final float DEFAULT_END_ANGLE = 270f; // Geometric (clockwise, relative to 3 o'clock)
 	private static final int DEFAULT_MAX = 100;
 	private static final int DEFAULT_PROGRESS = 0;
-	private static final int DEFAULT_CIRCLE_COLOR = Color.DKGRAY;
-	private static final int DEFAULT_CIRCLE_PROGRESS_COLOR = Color.argb(235, 74, 138, 255);
-	private static final int DEFAULT_POINTER_COLOR = Color.argb(235, 74, 138, 255);
-	private static final int DEFAULT_POINTER_HALO_COLOR = Color.argb(135, 74, 138, 255);
-	private static final int DEFAULT_POINTER_HALO_COLOR_ONTOUCH = Color.argb(135, 74, 138, 255);
+	private static final int DEFAULT_CIRCLE_COLOR = Color.argb(218,218,218,218);//Color.DKGRAY;
+	private static final int DEFAULT_CIRCLE_PROGRESS_COLOR = Color.argb(255,86,155,218);//Color.argb(235, 74, 138, 255);
+	private static final int DEFAULT_POINTER_COLOR = Color.argb(255,86,155,218);//Color.argb(235, 74, 138, 255);
+	private static final int DEFAULT_POINTER_HALO_COLOR = Color.argb(135,86,155,218);//Color.argb(135, 74, 138, 255);
+	private static final int DEFAULT_POINTER_HALO_COLOR_ONTOUCH = Color.argb(135,86,155,218);//Color.argb(135, 74, 138, 255);
 	private static final int DEFAULT_CIRCLE_FILL_COLOR = Color.TRANSPARENT;
 	private static final int DEFAULT_POINTER_ALPHA = 135;
 	private static final int DEFAULT_POINTER_ALPHA_ONTOUCH = 100;

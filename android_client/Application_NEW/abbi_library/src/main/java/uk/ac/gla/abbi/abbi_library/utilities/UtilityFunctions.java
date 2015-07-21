@@ -7,7 +7,7 @@ public class UtilityFunctions {
 
     //used to change the range of the frequency and volume when scaling the values during UI <-> bracelet communication
     public static int changeRangeMaintainingRatio(int currentValue, int oldMin, int oldMax, int newMin, int newMax){
-        int newValue = -1;
+        int newValue;
         int oldRange = oldMax - oldMin;
         if (oldRange == 0)
             newValue = newMin;

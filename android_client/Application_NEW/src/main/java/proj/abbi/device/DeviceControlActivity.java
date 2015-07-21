@@ -26,32 +26,34 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
-
-import proj.abbi.R;
-import proj.abbi.playback.ContinuousActivity;
-import proj.abbi.playback.IntermittentActivity;
-import proj.abbi.playback.PlaybackActivity;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
 
+import proj.abbi.CircleSeekBarListener;
+import proj.abbi.CircularSeekBar;
+import proj.abbi.R;
+import proj.abbi.playback.ContinuousActivity;
+import proj.abbi.playback.IntermittentActivity;
+import proj.abbi.playback.PlaybackActivity;
 import uk.ac.gla.abbi.abbi_library.AboutDialogue;
 import uk.ac.gla.abbi.abbi_library.BluetoothLeService;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.ABBIGattReadWriteCharacteristics;
@@ -59,6 +61,7 @@ import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioContinuous;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioIntermittent;
 import uk.ac.gla.abbi.abbi_library.utilities.Globals;
 import uk.ac.gla.abbi.abbi_library.utilities.UUIDConstants;
+import uk.ac.gla.abbi.abbi_library.utilities.UtilityFunctions;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
@@ -81,14 +84,14 @@ public class DeviceControlActivity extends Activity {
     private boolean mConnected = false;
 
     private LinearLayout mLayoutInfo = null;
-    private LinearLayout mMuteLayout = null;
-    private SeekBar mVolumeBar = null;
-    private ToggleButton mSoundCtrl = null;
+    private CircularSeekBar mVolumeBar = null;
+    private Switch mSoundCtrl = null;
     private Switch mMuteSwitch = null;
-    private ImageView mIconBattery = null;
-    private ImageView mAnimBattery = null;
     private RadioGroup mRadioSound = null;
     private Button mButtonSoundProperties = null;
+    private ProgressBar progressBar = null;
+    private TextView PBtextView = null;
+    private TextView textViewVol = null;
 
     private int _countClick = 0;
     private boolean experimenterMode = false;
@@ -162,23 +165,32 @@ public class DeviceControlActivity extends Activity {
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-
-        // Sets up UI references.
         mLayoutInfo = (LinearLayout) findViewById(R.id.linearLayoutInfo);
-        mMuteLayout = (LinearLayout) findViewById(R.id.linearLayoutMute);
+        // Sets up UI references.
+
         mAddressField = (TextView) findViewById(R.id.device_address);
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
-        mIconBattery = (ImageView) findViewById(R.id.iconBattery);
-        mAnimBattery = (ImageView) findViewById(R.id.animBattery);
-        mMuteSwitch = (Switch) findViewById(R.id.switch1);
-        mVolumeBar = (SeekBar) findViewById(R.id.seekBar1);
+        mVolumeBar = (CircularSeekBar) findViewById(R.id.seekBarVol);
+        mVolumeBar.setMax(Globals.UI_VOLUME_RANGE_MAX);
+        textViewVol = (TextView) findViewById(R.id.textViewVol);
         mRadioSound = (RadioGroup) findViewById(R.id.radioGroup1);
         mButtonSoundProperties = (Button) findViewById(R.id.buttonSoundProperties);
-        mSoundCtrl = (ToggleButton) findViewById(R.id.toggleButton1);
+        mSoundCtrl = (Switch) findViewById(R.id.soundOnOffSwitch);
+        mMuteSwitch = (Switch) findViewById(R.id.muteSwitch);
+
+
+        Resources res = getResources();
+        Drawable drawable = res.getDrawable(R.drawable.progress_bar);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar.setProgress(25);   // Main Progress
+        progressBar.setSecondaryProgress(50); // Secondary Progress
+        progressBar.setMax(100); // Maximum Progress
+        progressBar.setProgressDrawable(drawable);
+        PBtextView = (TextView) findViewById(R.id.PBtextView);
 
         // set text field data
-        getActionBar().setTitle(mDeviceName);
+        getActionBar().setTitle("ABBI Remote: " + mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         updateDeviceAddress(mDeviceAddress);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -251,7 +263,7 @@ public class DeviceControlActivity extends Activity {
             case android.R.id.home:
                 //onBackPressed();
                 _countClick++;
-                if(_countClick>8)
+                if(_countClick>3)
                 {
                     toggleExperimenterMode();
                     changeAppModel ();
@@ -319,15 +331,18 @@ public class DeviceControlActivity extends Activity {
                 Globals.audioPlayback = dataint;
                 break;
             case UUIDConstants.Accelerometer_UUID:
+
                 displayData(String.valueOf(dataint));
                 //Todo: Do something with accelerometer data
                 // most probably the thing to do is something like:
                 //recognizeMovement(dataint);
                 break;
             case UUIDConstants.Gyroscope_UUID:
+                displayData(String.valueOf(dataint));
                 //Todo: Do something with gyroscope data
                 break;
             case UUIDConstants.Magnetometer_UUID:
+                displayData(String.valueOf(dataint));
                 //Todo: do something with magnetometer data
                 break;
             case UUIDConstants.IMU_UUID:
@@ -340,14 +355,14 @@ public class DeviceControlActivity extends Activity {
     {
         if (!experimenterMode) {
             mSoundCtrl.setVisibility(View.GONE);
-            mMuteLayout.setVisibility(View.VISIBLE);
+            mMuteSwitch.setVisibility(View.VISIBLE);
             mLayoutInfo.setVisibility(View.GONE);
             //this.Window.ClearFlags (WindowManagerFlags.KeepScreenOn);
         }
         else {
-            mMuteLayout.setVisibility(View.GONE);
+            mMuteSwitch.setVisibility(View.GONE);
             mSoundCtrl.setVisibility(View.VISIBLE);
-            mLayoutInfo.setVisibility(View.GONE); // Set to View.VISIBLE in order to see the device address, the status and the data (from displayData())
+            mLayoutInfo.setVisibility(View.VISIBLE); // Set to View.VISIBLE in order to see the device address, the status and the data (from displayData())
             //this.Window.AddFlags (WindowManagerFlags.KeepScreenOn);
         }
     }
@@ -527,15 +542,20 @@ public class DeviceControlActivity extends Activity {
         mButtonSoundProperties.setOnClickListener(handleSoundPropertiesClick);
     }
 
-    private SeekBar.OnSeekBarChangeListener handleVolumeChanged = new SeekBar.OnSeekBarChangeListener() {
+    private CircularSeekBar.OnCircularSeekBarChangeListener handleVolumeChanged = new CircleSeekBarListener()
+    {
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        public void onProgressChanged(CircularSeekBar seekBar, int progress, boolean fromUser) {
+            if(progress>15){
+                progress = UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX);
+            }
+            textViewVol.setText(Html.fromHtml("<b>Volume<br>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
         }
         @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {
+        public void onStartTrackingTouch(CircularSeekBar seekBar) {
         }
         @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {
+        public void onStopTrackingTouch(CircularSeekBar seekBar) {
             ABBIGattReadWriteCharacteristics.writeMainVolumeLevel(seekBar.getProgress());
         }
     };
@@ -590,70 +610,10 @@ public class DeviceControlActivity extends Activity {
 
     protected void updateLevelIndicator(int n)
     {
-        View iconball1 = findViewById (R.id.view1);
-        View iconball2 = findViewById (R.id.view2);
-        View iconball3 = findViewById (R.id.view3);
-        View iconball4 = findViewById (R.id.view4);
-        // switch or compare
-        if (n < 25 && n > 0)
-        {
-            // only red ball
-            iconball1.setAlpha(1.0f);
-            iconball2.setAlpha(0.0f);
-            iconball3.setAlpha(0.0f);
-            iconball4.setAlpha(0.0f);
-        }
-        else
-        if (n >= 25 && n < 50)
-        {
-            //  red +yellow balls
-            iconball1.setAlpha(1.0f);
-            iconball2.setAlpha(1.0f);
-            iconball3.setAlpha(0.0f);
-            iconball4.setAlpha(0.0f);
-        }
-        else
-        if (n >= 50 && n < 75)
-        {
-            //  red +yellow+green balls
-            iconball1.setAlpha(1.0f);
-            iconball2.setAlpha(1.0f);
-            iconball3.setAlpha(1.0f);
-            iconball4.setAlpha(0.0f);
-        }
-        else
-        if (n >= 75 && n < 100)
-        {
-            //  red +yellow+greenx2 balls
-            iconball1.setAlpha(1.0f);
-            iconball2.setAlpha(1.0f);
-            iconball3.setAlpha(1.0f);
-            iconball4.setAlpha(1.0f);
-        }
-        else
-        {
-            // all dark
-            iconball1.setAlpha(0.0f);
-            iconball2.setAlpha(0.0f);
-            iconball3.setAlpha(0.0f);
-            iconball4.setAlpha(0.0f);
-        }
 
-        //if charging
-        if (n == 100)
-        {
-            if (mIconBattery != null)
-                mIconBattery.setVisibility(View.GONE);
-            if (mAnimBattery != null)
-                mAnimBattery.setVisibility(View.VISIBLE);
-        }
-        else
-        {
-            if (mIconBattery != null)
-                mIconBattery.setVisibility(View.VISIBLE);
-            if (mAnimBattery != null)
-                mAnimBattery.setVisibility(View.GONE);
-        }
+        progressBar.setProgress(n);
+        PBtextView.setText(Html.fromHtml("<b>Battery<br>" + n + " %</b>"));
+
     }
 
 

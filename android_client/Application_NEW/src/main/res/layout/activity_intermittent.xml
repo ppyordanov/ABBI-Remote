@@ -1,105 +1,332 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
-    <TableLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tableLayout1"
-        android:stretchColumns="1,2">
-
-        <TableRow
-            android:id="@+id/tableRow4">
-            <TextView
-                android:text="@string/stream1"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_column="1"
-                android:id="@+id/textView8"
-                android:layout_gravity="center" />
-            <TextView
-                android:text="@string/stream2"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_column="2"
-                android:id="@+id/textView9"
-                android:layout_gravity="center" />
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow1">
-            <TextView
-                android:text="@string/pitch"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/textViewFreq"
-                android:layout_column="0" />
-            <SeekBar
-                android:id="@+id/seekBarStream1Freq"
-                android:layout_column="1"
-                android:max="35"
-                android:progress="1" />
-            <SeekBar
-                android:layout_column="2"
-                android:id="@+id/seekBarStream2Freq"
-                android:max="35"
-                android:progress="1" />
-        </TableRow>
-        <TableRow
-            android:id="@+id/tableRow2">
-            <TextView
-                android:text="@string/volume"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/textViewVol"
-                android:layout_column="0" />
-            <SeekBar
-                android:id="@+id/seekBarStream1Vol"
-                android:layout_column="1"
-                android:max="15"
-                android:progress="1" />
-            <SeekBar
-                android:layout_column="2"
-                android:id="@+id/seekBarStream2Vol"
-                android:max="15"
-                android:progress="1" />
-        </TableRow>
-    </TableLayout>
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Stream 1 = stream 2"
-        android:id="@+id/lockRatioCheckBox"
-        android:checked="true" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout2"
-        android:paddingTop="20dp">
+        android:id="@+id/firstLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
-            android:text="@string/bpm"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/labelBPM" />
-        <SeekBar
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:id="@+id/seekBarBpm"
-            android:layout_marginLeft="10dp"
-            android:max="23"
-            android:progress="1" />
+            android:id="@+id/textViewFreq"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_column="0"
+            android:gravity="center"
+            android:text="@string/pitch"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+            <proj.abbi.CircularSeekBar
+                android:id="@+id/seekBarStream1Freq"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/pitchDesc"
+                android:max="35"
+                android:progress="1" />
+
+            <TextView
+                android:id="@+id/textViewIndS1F"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/seekBarStream1Freq"
+                android:layout_alignLeft="@id/seekBarStream1Freq"
+                android:layout_alignRight="@id/seekBarStream1Freq"
+                android:layout_alignTop="@id/seekBarStream1Freq"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/stream1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+            <proj.abbi.CircularSeekBar
+                android:id="@+id/seekBarStream2Freq"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/pitchDesc"
+                android:max="35"
+                android:progress="1" />
+
+
+            <TextView
+                android:id="@+id/textViewIndS2F"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/seekBarStream2Freq"
+                android:layout_alignLeft="@id/seekBarStream2Freq"
+                android:layout_alignParentTop="true"
+                android:layout_alignRight="@id/seekBarStream2Freq"
+                android:layout_alignTop="@id/seekBarStream2Freq"
+                android:layout_centerHorizontal="true"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/stream2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
     </LinearLayout>
+
+
+    <View
+        android:id="@+id/secondView"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true" />
+
+
+    <LinearLayout
+        android:id="@+id/thirdLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/secondView"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewVol"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/volume"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+
+            <proj.abbi.CircularSeekBar
+                android:id="@+id/seekBarStream1Vol"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/volumeDesc"
+                android:max="15"
+                android:progress="1" />
+
+            <TextView
+                android:id="@+id/textViewIndS1V"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/seekBarStream1Vol"
+                android:layout_alignLeft="@id/seekBarStream1Vol"
+                android:layout_alignRight="@id/seekBarStream1Vol"
+                android:layout_alignTop="@id/seekBarStream1Vol"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/stream1"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:gravity="center">
+
+
+            <proj.abbi.CircularSeekBar
+                android:id="@+id/seekBarStream2Vol"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/volumeDesc"
+                android:max="15"
+                android:progress="1" />
+
+            <TextView
+                android:id="@+id/textViewIndS2V"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/seekBarStream2Vol"
+                android:layout_alignLeft="@id/seekBarStream2Vol"
+                android:layout_alignRight="@id/seekBarStream2Vol"
+                android:layout_alignTop="@id/seekBarStream2Vol"
+                android:background="#00000000"
+                android:gravity="center"
+                android:text="@string/stream2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_horizontal"
+                android:text="BPM (beats per minute)"
+                android:textStyle="bold"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <proj.abbi.CircularSeekBar
+                android:id="@+id/seekBarBpm"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerHorizontal="true"
+                android:max="15"
+                android:progress="1" />
+
+            <TextView
+                android:id="@+id/textViewIndBPM"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@id/seekBarBpm"
+                android:layout_alignLeft="@id/seekBarBpm"
+                android:layout_alignRight="@id/seekBarBpm"
+                android:layout_alignTop="@id/seekBarBpm"
+                android:background="#00000000"
+                android:gravity="center"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </RelativeLayout>
+
+        <CheckBox
+            android:id="@+id/lockRatioCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false"
+            android:text="Stream 1 = stream 2" />
+
+    </LinearLayout>
+
+
     <Button
-        android:text="@string/save"
         android:id="@+id/buttonIntermSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp" />
-</LinearLayout>
+        android:text="@string/save" />
+
+</RelativeLayout>
+
+
+    <!--
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+        <TableLayout
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tableLayout1"
+            android:stretchColumns="1,2">
+
+            <TableRow
+                android:id="@+id/tableRow4">
+                <TextView
+                    android:text="@string/stream1"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_column="1"
+                    android:id="@+id/textView8"
+                    android:layout_gravity="center" />
+                <TextView
+                    android:text="@string/stream2"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_column="2"
+                    android:id="@+id/textView9"
+                    android:layout_gravity="center" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRow1">
+                <TextView
+                    android:text="@string/pitch"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textViewFreq"
+                    android:layout_column="0" />
+                <SeekBar
+                    android:id="@+id/seekBarStream1Freq"
+                    android:layout_column="1"
+                    android:max="35"
+                    android:progress="1" />
+                <SeekBar
+                    android:layout_column="2"
+                    android:id="@+id/seekBarStream2Freq"
+                    android:max="35"
+                    android:progress="1" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/tableRow2">
+                <TextView
+                    android:text="@string/volume"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textViewVol"
+                    android:layout_column="0" />
+                <SeekBar
+                    android:id="@+id/seekBarStream1Vol"
+                    android:layout_column="1"
+                    android:max="15"
+                    android:progress="1" />
+                <SeekBar
+                    android:layout_column="2"
+                    android:id="@+id/seekBarStream2Vol"
+                    android:max="15"
+                    android:progress="1" />
+            </TableRow>
+        </TableLayout>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stream 1 = stream 2"
+            android:id="@+id/lockRatioCheckBox"
+            android:checked="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/linearLayout2"
+            android:paddingTop="20dp">
+            <TextView
+                android:text="@string/bpm"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/labelBPM" />
+            <SeekBar
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:id="@+id/seekBarBpm"
+                android:layout_marginLeft="10dp"
+                android:max="23"
+                android:progress="1" />
+        </LinearLayout>
+        <Button
+            android:text="@string/save"
+            android:id="@+id/buttonIntermSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp" />
+    </LinearLayout>
+
+    -->
