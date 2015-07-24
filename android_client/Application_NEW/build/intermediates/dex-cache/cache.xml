@@ -44,6 +44,13 @@
         <dex dex="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-a3980abf5f6ac5404a1f140d2fe09e3907906910.jar" />
     </item>
     <item
+        jar="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\exploded-aar\com.jjoe64\graphview\4.0.1\classes.jar"
+        jumboMode="false"
+        revision="21.1.1"
+        sha1="37bf8de5b4f9e7e93006db783b9b3168e32e38e9">
+        <dex dex="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-587889c8ca842ae6a848501e1c8391fe48e649cf.jar" />
+    </item>
+    <item
         jar="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\libs\internal_impl-22.2.0.jar"
         jumboMode="false"
         revision="21.1.1"
@@ -54,7 +61,7 @@
         jar="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\exploded-aar\Application_NEW\abbi_library\unspecified\classes.jar"
         jumboMode="false"
         revision="21.1.1"
-        sha1="103f5619e12a2134d53e308cb48d4d44c618ea11">
+        sha1="c7f22424b8f402552447c9e386ad955dcedfd424">
         <dex dex="C:\Users\Peter Yordanov\Desktop\Ppyordanov&apos;s files\GU_HCI_Summer_Project\ABBI\abbi\android_client\Application_NEW\build\intermediates\pre-dexed\debug\classes-a00ba01f3f06025b0dd06cfe86f15419431d2adb.jar" />
     </item>
 

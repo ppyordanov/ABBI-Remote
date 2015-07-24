@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="userToggleDesc">Use this switch to toggle between user and parental/ experimenter mode.</string>
+</resources>

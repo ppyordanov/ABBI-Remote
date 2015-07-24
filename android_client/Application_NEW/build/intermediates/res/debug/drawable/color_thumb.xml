@@ -2,9 +2,9 @@
     android:shape="rectangle">
 
 
-    <size android:height="45dp" />
+    <size android:height="40dp" />
     <gradient
-        android:height="45dp"
+        android:height="40dp"
         android:endColor="#FF569BDA"
         android:startColor="#FF569BDA" />
     <corners

@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.HapticFeedbackConstants;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SoundEffectConstants;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -14,7 +18,6 @@ import android.widget.TextView;
 import proj.abbi.CircleSeekBarListener;
 import proj.abbi.CircularSeekBar;
 import proj.abbi.R;
-
 import uk.ac.gla.abbi.abbi_library.AboutDialogue;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.ABBIGattReadWriteCharacteristics;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioIntermittent;
@@ -61,7 +64,7 @@ public class IntermittentActivity extends Activity {
         volumeBar1.setMax(Globals.UI_VOLUME_RANGE_MAX);
         frequencyBar2.setMax(Globals.UI_FREQUENCY_RANGE_MAX);
         volumeBar2.setMax(Globals.UI_VOLUME_RANGE_MAX);
-        bpmBar.setMax(Globals.NEW_BPM_RANGE_MAX);
+        bpmBar.setMax(Globals.UI_BPM_RANGE_MAX);
 
         lockRatio =(CheckBox)findViewById(R.id.lockRatioCheckBox);
 
@@ -69,7 +72,7 @@ public class IntermittentActivity extends Activity {
         volumeBar1.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai1.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
         frequencyBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getFreq(), Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX));
         volumeBar2.setProgress(UtilityFunctions.changeRangeMaintainingRatio(ai2.getVolume(), Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX));
-        bpmBar.setProgress(UtilityFunctions.changeRangeMaintainingRatio(currentBpm, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX, Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX));
+        bpmBar.setProgress(UtilityFunctions.changeRangeMaintainingRatio(currentBpm, Globals.BRACELET_BPM_RANGE_MIN, Globals.BRACELET_BPM_RANGE_MAX, Globals.UI_BPM_RANGE_MIN, Globals.UI_BPM_RANGE_MAX));
         saveButton.setVisibility(View.GONE);
 
         frequencyBar1.setOnSeekBarChangeListener(handleProgressChanged);
@@ -78,6 +81,16 @@ public class IntermittentActivity extends Activity {
         volumeBar2.setOnSeekBarChangeListener(handleProgressChanged);
         bpmBar.setOnSeekBarChangeListener(handleProgressChanged);
         saveButton.setOnClickListener(handleSaveClick);
+
+
+        //accessibility
+        findViewById(R.id.seekBarStream1VolLayout).setOnClickListener(handleVolume1Clicked);
+        findViewById(R.id.seekBarStream1FreqLayout).setOnClickListener(handleFrequency1Clicked);
+        findViewById(R.id.seekBarStream2VolLayout).setOnClickListener(handleVolume2Clicked);
+        findViewById(R.id.seekBarStream2FreqLayout).setOnClickListener(handleFrequency2Clicked);
+        findViewById(R.id.seekBarBpmLayout).setOnClickListener(handleBpmClicked);
+
+
     }
 
 
@@ -107,10 +120,95 @@ public class IntermittentActivity extends Activity {
 
     //----------------------------------------------------------------------------
 
-    private Button.OnClickListener handleSaveClick = new Button.OnClickListener() {
+    OnClickListener handleVolume1Clicked = new OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_1_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+        }
+    };
+    OnClickListener handleVolume2Clicked = new OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_2_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+        }
+    };
+    OnClickListener handleFrequency1Clicked = new OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_1_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+        }
+    };
+    OnClickListener handleFrequency2Clicked = new OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_2_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+        }
+    };
+    OnClickListener handleBpmClicked = new OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_BEATS_PER_MINUTE_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
+        }
+    };
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        switch(Globals.CURRENT_HAPTIC_BUTTONS_WIRING) {
+            case (Globals.INTERMITTENT_FREQUENCY_1_ID):
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                    frequencyBar1.setProgress(frequencyBar1.getProgress() + 1);
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    frequencyBar1.setProgress(frequencyBar1.getProgress() - 1);
+                    return true;
+                }
+            case (Globals.INTERMITTENT_FREQUENCY_2_ID):
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                    frequencyBar2.setProgress(frequencyBar2.getProgress() + 1);
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    frequencyBar2.setProgress(frequencyBar2.getProgress() - 1);
+                    return true;
+                }
+            case (Globals.INTERMITTENT_VOLUME_1_ID):
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                    volumeBar1.setProgress(volumeBar1.getProgress() + 1);
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    volumeBar1.setProgress(volumeBar1.getProgress() - 1);
+                    return true;
+                }
+            case (Globals.INTERMITTENT_VOLUME_2_ID):
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                    volumeBar2.setProgress(volumeBar2.getProgress() + 1);
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    volumeBar2.setProgress(volumeBar2.getProgress() - 1);
+                    return true;
+                }
+            case (Globals.INTERMITTENT_BEATS_PER_MINUTE_ID):
+                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                    bpmBar.setProgress(bpmBar.getProgress() + 1);
+                    return true;
+                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                    bpmBar.setProgress(bpmBar.getProgress() -1 );
+                    return true;
+                }
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private OnClickListener handleSaveClick = new OnClickListener() {
         @Override
         public void onClick(View buttonView) {
-            Intent pbActIntent = null;
+
             Intent myIntent = new Intent();
             Globals.audioStream1.setFreq(ai1.getFreq());
             Globals.audioStream1.setVolume(ai1.getVolume());
@@ -125,7 +223,6 @@ public class IntermittentActivity extends Activity {
     //doesn't look like the settings are saved in the app (the save button is invisible)
     @Override
     public void onBackPressed(){
-        Intent pbActIntent = null;
         Intent myIntent = new Intent();
         Globals.audioStream1.setFreq(ai1.getFreq());
         Globals.audioStream1.setVolume(ai1.getVolume());
@@ -143,33 +240,10 @@ public class IntermittentActivity extends Activity {
 
 
             if (seekBar.equals(frequencyBar1)) {
-                TextView text = (TextView)findViewById(R.id.textViewIndS1F);
-                text.setText(Html.fromHtml("Stream 1<br><b>" + (progress * 100) / Globals.UI_FREQUENCY_RANGE_MAX + " %</b>"));
-            }
-            else if (seekBar.equals(frequencyBar2)){
-                TextView text = (TextView)findViewById(R.id.textViewIndS2F);
-                text.setText(Html.fromHtml("Stream 2<br><b>" + (progress * 100) / Globals.UI_FREQUENCY_RANGE_MAX + " %</b>"));
 
-            }
-            else if (seekBar.equals(volumeBar1)) {
-                TextView text = (TextView)findViewById(R.id.textViewIndS1V);
-                text.setText(Html.fromHtml("Stream 1<br><b>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
-            }
-            else if (seekBar.equals(volumeBar2)){
-                TextView text = (TextView)findViewById(R.id.textViewIndS2V);
-                text.setText(Html.fromHtml("Stream 2<br><b>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
-            }
-            else  {
-                TextView text = (TextView)findViewById(R.id.textViewIndBPM);
-                text.setText(Html.fromHtml("<b>" + (progress*100)/Globals.NEW_BPM_RANGE_MAX + " %</b>"));
-            }
-        }
-        @Override
-        public void onStartTrackingTouch(CircularSeekBar seekBar) {
-        }
-        @Override
-        public void onStopTrackingTouch(CircularSeekBar seekBar) {
-            if (seekBar.equals(frequencyBar1)) {
+                TextView text = (TextView)findViewById(R.id.textViewIndS1F);
+                text.setText(Html.fromHtml("Stream 1<br><b>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX) + " Hz</b>"));
+
                 ai1.setFreq(UtilityFunctions.changeRangeMaintainingRatio(frequencyBar1.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
                 if (lockRatio.isChecked()){
@@ -177,8 +251,13 @@ public class IntermittentActivity extends Activity {
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
                     frequencyBar2.setProgress(frequencyBar1.getProgress());
                 }
+
             }
             else if (seekBar.equals(frequencyBar2)){
+
+                TextView text = (TextView)findViewById(R.id.textViewIndS2F);
+                text.setText(Html.fromHtml("Stream 2<br><b>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX) + " Hz</b>"));
+
                 ai2.setFreq(UtilityFunctions.changeRangeMaintainingRatio(frequencyBar2.getProgress(), Globals.UI_FREQUENCY_RANGE_MIN, Globals.UI_FREQUENCY_RANGE_MAX, Globals.BRACELET_HZ_FREQUENCY_RANGE_MIN, Globals.BRACELET_HZ_FREQUENCY_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
                 if (lockRatio.isChecked()){
@@ -189,6 +268,10 @@ public class IntermittentActivity extends Activity {
 
             }
             else if (seekBar.equals(volumeBar1)) {
+
+                TextView text = (TextView)findViewById(R.id.textViewIndS1V);
+                text.setText(Html.fromHtml("Stream 1<br><b>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX) + " dB</b>"));
+
                 ai1.setVolume(UtilityFunctions.changeRangeMaintainingRatio(volumeBar1.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
                 if (lockRatio.isChecked()){
@@ -199,6 +282,10 @@ public class IntermittentActivity extends Activity {
 
             }
             else if (seekBar.equals(volumeBar2)){
+
+                TextView text = (TextView)findViewById(R.id.textViewIndS2V);
+                text.setText(Html.fromHtml("Stream 2<br><b>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX) + " dB</b>"));
+
                 ai2.setVolume(UtilityFunctions.changeRangeMaintainingRatio(volumeBar2.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX));
                 ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
                 if (lockRatio.isChecked()){
@@ -208,10 +295,22 @@ public class IntermittentActivity extends Activity {
                 }
 
             }
-            else{
-                currentBpm = UtilityFunctions.changeRangeMaintainingRatio(seekBar.getProgress(),  Globals.NEW_BPM_RANGE_MIN, Globals.NEW_BPM_RANGE_MAX, Globals.BRACELET_BPM_RANGE_MIN, Globals.OLD_BPM_RANGE_MAX);
+            else  {
+
+                TextView text = (TextView)findViewById(R.id.textViewIndBPM);
+                text.setText(Html.fromHtml("<b>" + UtilityFunctions.changeRangeMaintainingRatio(progress,  Globals.UI_BPM_RANGE_MIN, Globals.UI_BPM_RANGE_MAX, Globals.BRACELET_BPM_RANGE_MIN, Globals.BRACELET_BPM_RANGE_MAX)+ "</b>"));
+
+                currentBpm = UtilityFunctions.changeRangeMaintainingRatio(seekBar.getProgress(),  Globals.UI_BPM_RANGE_MIN, Globals.UI_BPM_RANGE_MAX, Globals.BRACELET_BPM_RANGE_MIN, Globals.BRACELET_BPM_RANGE_MAX);
                 ABBIGattReadWriteCharacteristics.writeIntermittentBPM(currentBpm);
+
             }
+        }
+
+        @Override
+        public void onStartTrackingTouch(CircularSeekBar seekBar) {
+        }
+        @Override
+        public void onStopTrackingTouch(CircularSeekBar seekBar) {
         }
     };
 

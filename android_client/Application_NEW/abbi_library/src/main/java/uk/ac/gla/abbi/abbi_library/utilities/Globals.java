@@ -50,13 +50,16 @@ public class Globals {
     public static final int UI_VOLUME_RANGE_MIN = 0;
     public static final int UI_VOLUME_RANGE_MAX = 15;
 
+    public static final int BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX = 90;
+    public static final int BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN = 30;
+
     /*
     BPM range
      */
     public static final int BRACELET_BPM_RANGE_MIN = 10;
-    public static final int OLD_BPM_RANGE_MAX = 240;
-    public static final int NEW_BPM_RANGE_MIN = 0;
-    public static final int NEW_BPM_RANGE_MAX = 23;
+    public static final int BRACELET_BPM_RANGE_MAX = 240;
+    public static final int UI_BPM_RANGE_MIN = 0;
+    public static final int UI_BPM_RANGE_MAX = 23;
 
 
     // ABBI characteristic with default values
@@ -69,6 +72,20 @@ public class Globals {
     public static AudioIntermittent audioStream2 = new AudioIntermittent(800, 1000, 0, 50000, 50000);
     public static int audioBPM = 120;
     public static int audioPlayback = 1;
+
+    //accessibility for circular seekbar
+    public static int CURRENT_HAPTIC_BUTTONS_WIRING = -1;
+
+    public static final int MAIN_VOLUME_ID = 1;
+
+    public static final int CONTINUOUS_VOLUME_ID = 10;
+    public static final int CONTINUOUS_FREQUENCY_ID = 11;
+
+    public static final int INTERMITTENT_VOLUME_1_ID = 20;
+    public static final int INTERMITTENT_VOLUME_2_ID = 21;
+    public static final int INTERMITTENT_FREQUENCY_1_ID = 22;
+    public static final int INTERMITTENT_FREQUENCY_2_ID = 23;
+    public static final int INTERMITTENT_BEATS_PER_MINUTE_ID = 24;
 
     //ABBI playback sound files list
     public static final String[] SOUND_FILES_PLAYLIST = {"short_explosion.wav",

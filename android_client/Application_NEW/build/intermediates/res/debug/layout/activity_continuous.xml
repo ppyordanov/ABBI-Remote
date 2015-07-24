@@ -5,10 +5,11 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/firstLayout"
+        android:id="@+id/frequencyLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toLeftOf="@+id/secondView"
+        android:layout_toLeftOf="@+id/middleView"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -43,16 +44,17 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/secondView"
+        android:id="@+id/middleView"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true" />
 
     <LinearLayout
-        android:id="@+id/thirdLayout"
+        android:id="@+id/volumeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@+id/secondView"
+        android:layout_toRightOf="@+id/middleView"
+        android:clickable="true"
         android:gravity="center"
         android:orientation="vertical">
 

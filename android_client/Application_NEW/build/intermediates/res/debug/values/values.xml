@@ -83,6 +83,7 @@
     <declare-styleable name="CardView"><attr format="color" name="cardBackgroundColor"/><attr format="dimension" name="cardCornerRadius"/><attr format="dimension" name="cardElevation"/><attr format="dimension" name="cardMaxElevation"/><attr format="boolean" name="cardUseCompatPadding"/><attr format="boolean" name="cardPreventCornerOverlap"/><attr format="dimension" name="contentPadding"/><attr format="dimension" name="contentPaddingLeft"/><attr format="dimension" name="contentPaddingRight"/><attr format="dimension" name="contentPaddingTop"/><attr format="dimension" name="contentPaddingBottom"/></declare-styleable>
     <declare-styleable name="CircularSeekBar"><attr format="integer" name="progress"/><attr format="integer" name="max"/><attr format="boolean" name="move_outside_circle"/><attr format="boolean" name="maintain_equal_circle"/><attr format="boolean" name="use_custom_radii"/><attr format="boolean" name="lock_enabled"/><attr format="float" name="circle_x_radius"/><attr format="float" name="circle_y_radius"/><attr format="float" name="circle_stroke_width"/><attr format="float" name="pointer_radius"/><attr format="float" name="pointer_halo_width"/><attr format="float" name="pointer_halo_border_width"/><attr format="string" name="circle_color"/><attr format="string" name="circle_progress_color"/><attr format="string" name="pointer_color"/><attr format="string" name="pointer_halo_color"/><attr format="string" name="pointer_halo_color_ontouch"/><attr format="integer" name="pointer_alpha_ontouch"/><attr format="float" name="start_angle"/><attr format="float" name="end_angle"/><attr format="string" name="circle_fill"/></declare-styleable>
     <declare-styleable name="DrawerArrowToggle"><attr format="color" name="color"/><attr format="boolean" name="spinBars"/><attr format="dimension" name="drawableSize"/><attr format="dimension" name="gapBetweenBars"/><attr format="dimension" name="topBottomBarArrowSize"/><attr format="dimension" name="middleBarArrowSize"/><attr format="dimension" name="barSize"/><attr format="dimension" name="thickness"/></declare-styleable>
+    <declare-styleable name="GraphViewXML"><attr format="string" name="seriesData"/><attr format="string" name="seriesType"/><attr format="string" name="seriesTitle"/><attr name="android:title"/><attr format="color" name="seriesColor"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat"><attr name="android:orientation"/><attr name="android:gravity"/><attr name="android:baselineAligned"/><attr name="android:baselineAlignedChildIndex"/><attr name="android:weightSum"/><attr format="boolean" name="measureWithLargestChild"/><attr name="divider"/><attr name="showDividers"><flag name="none" value="0"/><flag name="beginning" value="1"/><flag name="middle" value="2"/><flag name="end" value="4"/></attr><attr format="dimension" name="dividerPadding"/></declare-styleable>
     <declare-styleable name="LinearLayoutCompat_Layout"><attr name="android:layout_width"/><attr name="android:layout_height"/><attr name="android:layout_weight"/><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ListPopupWindow"><attr name="android:dropDownVerticalOffset"/><attr name="android:dropDownHorizontalOffset"/></declare-styleable>
@@ -241,16 +242,23 @@
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
     <string name="battery">Battery</string>
+    <string name="batteryDesc">Battery level is displayed in order to allow users to charge their bracelet whenever the its battery power is running low.</string>
     <string name="ble_not_supported">BLE is not supported</string>
     <string name="bpm">BPM</string>
+    <string name="bpmDesc">Use the circular slider to control the bracelet\'s bpm (beats per minute). Available only for the intermittent sound mode.</string>
     <string name="close">Close</string>
     <string name="connected">Connected</string>
     <string name="continuous">Continuous</string>
+    <string name="continuousSoundDesc">This option configures the sound output to be continuous.</string>
+    <string name="deviceAddressDesc">This field displays the identifier of the ABBI bracelet the device is currently connected to.</string>
+    <string name="deviceDataDesc">This field shows additional data parameters received from the ABBI bracelet.</string>
+    <string name="deviceStateDesc">This field shows the current state of the ABBI bracelet (connected/disconnected).</string>
     <string name="device_control">ABBI Remote: Device Control</string>
     <string name="disconnected">Disconnected</string>
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
     <string name="imageABBIDesc">Select an item from this list to connect to a Bluetooth device.</string>
     <string name="intermittent">Intermittent</string>
+    <string name="intermittentSoundDesc">This option configures the sound output to be intermittent, further settings such as frequency and stream volume can be specified.</string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/base-strings.xml -->
     <eat-comment/>
     <string name="intro_message">
@@ -278,13 +286,18 @@
     <string name="menu_stop">Stop</string>
     <string name="mode">Mode</string>
     <string name="mute">Mute</string>
+    <string name="muteOnOffSwitch">This switch can be used to mute/ unmute the bracelet whenever users require this.</string>
     <string name="no_data">No data</string>
     <string name="pitch"><b>Frequency</b></string>
     <string name="pitchDesc">Use the circular slider to modify the sound frequency (this will result in a change of the sound pitch.)</string>
     <string name="playback">Playback</string>
+    <string name="playbackSoundDesc">Users can choose a sound file from a list of options to be used as the main sound output for the bracelet they are using.</string>
     <string name="properties">Properties</string>
+    <string name="propertiesDesc">This button displays more properties related to the sound playback mode the user has selected.</string>
     <string name="save">Save</string>
     <string name="scan">Scan for ABBI devices</string>
+    <string name="soundOnOffDesc">This switch can be used to test the configured sound output from the bracelet.</string>
+    <string name="speakerVolumeDesc">The bracelet\'s speaker volume output can be controlled from this circular slider.</string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="status_bar_notification_info_overflow">999+</string>
@@ -292,6 +305,7 @@
     <eat-comment/>
     <string name="stream1">Stream 1</string>
     <string name="stream2">Stream 2</string>
+    <string name="streamDesc">Make the sound output configuration for one of the streams reflect the settings for the other.</string>
     <string name="title_activity_advanced_options">ABBI Remote: Advanced Options</string>
     <string name="title_activity_continuous">ABBI Remote: Continuous Sound Properties</string>
     <string name="title_activity_intermittent">ABBI Remote: Intermittent Sound Properties</string>
@@ -301,6 +315,11 @@
     <string name="unknown_characteristic">Unknown characteristic</string>
     <string name="unknown_device">Unknown device</string>
     <string name="unknown_service">Unknown service</string>
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="userToggleDesc">Use this switch to toggle between user and parental/ experimenter mode.</string>
+    <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
+    <eat-comment/>
     <string name="volume"><b>Volume</b></string>
     <string name="volumeDesc">This slider can be used to control the volume of the sound the ABBI bracelet emits.</string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.0/res/values/values.xml -->

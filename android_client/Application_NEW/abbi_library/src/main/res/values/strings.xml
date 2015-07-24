@@ -67,5 +67,18 @@
     <string name="volumeDesc">This slider can be used to control the volume of the sound the ABBI bracelet emits.</string>
     <string name="pitchDesc">Use the circular slider to modify the sound frequency (this will result in a change of the sound pitch.)</string>
     <string name="imageABBIDesc">Select an item from this list to connect to a Bluetooth device.</string>
+    <string name="deviceAddressDesc">This field displays the identifier of the ABBI bracelet the device is currently connected to.</string>
+    <string name="deviceStateDesc">This field shows the current state of the ABBI bracelet (connected/disconnected).</string>
+    <string name="deviceDataDesc">This field shows additional data parameters received from the ABBI bracelet.</string>
+    <string name="batteryDesc">Battery level is displayed in order to allow users to charge their bracelet whenever the its battery power is running low.</string>
+    <string name="soundOnOffDesc">This switch can be used to test the configured sound output from the bracelet.</string>
+    <string name="muteOnOffSwitch">This switch can be used to mute/ unmute the bracelet whenever users require this.</string>
+    <string name="speakerVolumeDesc">The bracelet\'s speaker volume output can be controlled from this circular slider.</string>
+    <string name="continuousSoundDesc">This option configures the sound output to be continuous.</string>
+    <string name="intermittentSoundDesc">This option configures the sound output to be intermittent, further settings such as frequency and stream volume can be specified.</string>
+    <string name="playbackSoundDesc">Users can choose a sound file from a list of options to be used as the main sound output for the bracelet they are using.</string>
+    <string name="propertiesDesc">This button displays more properties related to the sound playback mode the user has selected.</string>
+    <string name="bpmDesc">Use the circular slider to control the bracelet\'s bpm (beats per minute). Available only for the intermittent sound mode.</string>
+    <string name="streamDesc">Make the sound output configuration for one of the streams reflect the settings for the other.</string>
 
 </resources>

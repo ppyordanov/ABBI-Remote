@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/label_device_address"
                 android:textSize="18sp"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:contentDescription="@string/deviceAddressDesc"/>
             <Space android:layout_width="5dp"
                 android:layout_height="wrap_content"/>
             <TextView android:id="@+id/device_address"
@@ -54,7 +55,8 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_state"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:contentDescription="@string/deviceStateDesc"/>
             <Space android:layout_width="5dp"
                 android:layout_height="wrap_content"/>
             <TextView android:id="@+id/connection_state"
@@ -71,7 +73,8 @@
             <TextView android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_data"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:contentDescription="@string/deviceDataDesc"/>
             <Space android:layout_width="5dp"
                 android:layout_height="wrap_content"/>
             <TextView android:id="@+id/data_value"
@@ -97,7 +100,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="10dp">
 
 
             <ProgressBar
@@ -111,7 +115,8 @@
                 android:max="100"
                 android:secondaryProgress="100"
                 android:progressDrawable="@drawable/progress_bar"
-                android:layout_centerHorizontal="true" />
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/batteryDesc"/>
 
             <TextView
                 android:text="@string/battery"
@@ -128,36 +133,54 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true" />
 
-
-
             <Switch
                 android:width="200dp"
-                android:textOn="Sound On"
-                android:textOff="Sound Off"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:textOff="Off"
+                android:textOn="On"
                 android:thumb="@drawable/thumb"
                 android:track="@drawable/track"
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="80dp"
-                android:id="@+id/soundOnOffSwitch"
-                android:minHeight="120dp"
+                android:id="@+id/modeSwitch"
                 android:checked="false"
                 android:layout_below="@+id/progressBar"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/userToggleDesc"
+                android:text="Parent Mode"/>
 
             <Switch
                 android:width="200dp"
-                android:layout_height="80dp"
-                android:layout_marginTop="20dp"
+                android:textOn="On"
+                android:layout_marginTop="0dp"
+                android:textOff="Off"
+                android:thumb="@drawable/thumb"
+                android:track="@drawable/track"
                 android:layout_width="wrap_content"
-                android:textOff="Mute Off"
-                android:textOn="Mute On"
+                android:layout_height="50dp"
+                android:id="@+id/soundOnOffSwitch"
+                android:checked="false"
+                android:layout_below="@+id/modeSwitch"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/soundOnOffDesc"
+                android:text="Sound"/>
+
+            <Switch
+                android:width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="0dp"
+                android:layout_width="wrap_content"
+                android:textOff="Off"
+                android:textOn="On"
                 android:thumb="@drawable/thumb"
                 android:track="@drawable/track"
                 android:id="@+id/muteSwitch"
                 android:checked="false"
-                android:layout_below="@+id/progressBar"
-                android:layout_centerHorizontal="true" />
+                android:layout_below="@+id/modeSwitch"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/muteOnOffSwitch"
+                android:text="Mute"/>
+
 
 
         </RelativeLayout>
@@ -193,6 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/linearLayoutVolume"
+                android:clickable="true"
                 android:layout_margin="10dp">
 
                 <RelativeLayout
@@ -206,7 +230,8 @@
                         android:max="15"
                         android:progress="1"
                         android:fitsSystemWindows="true"
-                        android:layout_gravity="center_vertical" />
+                        android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/speakerVolumeDesc"/>
 
                     <TextView
                         android:id="@+id/textViewVol"
@@ -247,17 +272,20 @@
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:text="@string/continuous"
-                        android:id="@+id/radioSoundContinuous" />
+                        android:id="@+id/radioSoundContinuous"
+                        android:contentDescription="@string/continuousSoundDesc"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/intermittent"
-                        android:id="@+id/radioSoundIntermmitent" />
+                        android:id="@+id/radioSoundIntermmitent"
+                        android:contentDescription="@string/intermittentSoundDesc"/>
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/playback"
-                        android:id="@+id/radioSoundPlayback" />
+                        android:id="@+id/radioSoundPlayback"
+                        android:contentDescription="@string/playbackSoundDesc"/>
                 </RadioGroup>
                 <Button
                     android:text="@string/properties"
@@ -265,7 +293,8 @@
                     android:layout_height="match_parent"
                     android:id="@+id/buttonSoundProperties"
                     android:background="@drawable/custom_button"
-                    android:textColor="#fff"/>
+                    android:textColor="#fff"
+                    android:contentDescription="@string/propertiesDesc"/>
 
 
             </LinearLayout>
@@ -274,6 +303,19 @@
         </RelativeLayout>
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/logDataLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true" >
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/graph" />
+
+        </RelativeLayout>
+
 </RelativeLayout>
 
 

@@ -19,6 +19,7 @@ dependencies {
     compile 'com.android.support:support-v4:21.0.2'
     compile 'com.android.support:support-v13:21.0.2'
     compile 'com.android.support:cardview-v7:21.0.2'
+    compile 'com.jjoe64:graphview:4.0.1'
     compile project(':abbi_library')
 }
 

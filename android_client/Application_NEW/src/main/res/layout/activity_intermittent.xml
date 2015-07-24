@@ -25,7 +25,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/seekBarStream1FreqLayout"
+            android:clickable="true">
 
             <proj.abbi.CircularSeekBar
                 android:id="@+id/seekBarStream1Freq"
@@ -53,7 +55,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/seekBarStream2FreqLayout"
+            android:clickable="true">
 
             <proj.abbi.CircularSeekBar
                 android:id="@+id/seekBarStream2Freq"
@@ -112,7 +116,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/seekBarStream1VolLayout"
+            android:clickable="true">
 
 
             <proj.abbi.CircularSeekBar
@@ -141,7 +147,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:id="@+id/seekBarStream2VolLayout"
+            android:clickable="true">
 
 
             <proj.abbi.CircularSeekBar
@@ -171,7 +179,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:id="@+id/seekBarBpmLayout"
+            android:clickable="true">
 
             <TextView
                 android:layout_width="match_parent"
@@ -186,6 +196,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_centerHorizontal="true"
+                android:contentDescription="@string/bpmDesc"
                 android:max="15"
                 android:progress="1" />
 
@@ -208,7 +219,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"
-            android:text="Stream 1 = stream 2" />
+            android:text="Stream 1 = stream 2"
+            android:contentDescription="@string/streamDesc"/>
 
     </LinearLayout>
 

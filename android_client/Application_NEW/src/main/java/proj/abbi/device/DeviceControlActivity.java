@@ -27,22 +27,33 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
+import android.view.HapticFeedbackConstants;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -84,9 +95,12 @@ public class DeviceControlActivity extends Activity {
     private boolean mConnected = false;
 
     private LinearLayout mLayoutInfo = null;
+    private LinearLayout mLayoutAudioMode = null;
+    private RelativeLayout mLogDataLayout = null;
     private CircularSeekBar mVolumeBar = null;
     private Switch mSoundCtrl = null;
     private Switch mMuteSwitch = null;
+    private Switch mUserModeSwitch = null;
     private RadioGroup mRadioSound = null;
     private Button mButtonSoundProperties = null;
     private ProgressBar progressBar = null;
@@ -95,6 +109,8 @@ public class DeviceControlActivity extends Activity {
 
     private int _countClick = 0;
     private boolean experimenterMode = false;
+
+    private Vibrator mVolumeVibrator;
 
     //------------------------------------------------------------------------
 
@@ -166,6 +182,9 @@ public class DeviceControlActivity extends Activity {
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
         mLayoutInfo = (LinearLayout) findViewById(R.id.linearLayoutInfo);
+        mLayoutAudioMode = (LinearLayout) findViewById(R.id.linearLayoutAudioMode);
+        mLogDataLayout = (RelativeLayout) findViewById(R.id.logDataLayout);
+
         // Sets up UI references.
 
         mAddressField = (TextView) findViewById(R.id.device_address);
@@ -178,6 +197,7 @@ public class DeviceControlActivity extends Activity {
         mButtonSoundProperties = (Button) findViewById(R.id.buttonSoundProperties);
         mSoundCtrl = (Switch) findViewById(R.id.soundOnOffSwitch);
         mMuteSwitch = (Switch) findViewById(R.id.muteSwitch);
+        mUserModeSwitch = (Switch) findViewById(R.id.modeSwitch);
 
 
         Resources res = getResources();
@@ -195,6 +215,46 @@ public class DeviceControlActivity extends Activity {
         updateDeviceAddress(mDeviceAddress);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+        //accessibility
+        findViewById(R.id.linearLayoutVolume).setOnClickListener(handleVolumeClicked);
+
+
+        //visualize data
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> accelerometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
+                new DataPoint(0, 1),
+                new DataPoint(1, 5),
+                new DataPoint(2, 3),
+                new DataPoint(3, 2),
+                new DataPoint(4, 6)
+        });
+
+        LineGraphSeries<DataPoint> gyroscopeData = new LineGraphSeries<DataPoint>(new DataPoint[]{
+                new DataPoint(3, 4),
+                new DataPoint(12, 1),
+        });
+
+        LineGraphSeries<DataPoint> magnetometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
+                new DataPoint(3, 4),
+                new DataPoint(12, 1),
+        });
+
+        accelerometerData.setTitle("Accelerometer");
+        gyroscopeData.setTitle("Gyroscope");
+        magnetometerData.setTitle("Magnetometer");
+
+        accelerometerData.setColor(Color.argb(255, 81, 218, 99));
+        gyroscopeData.setColor(Color.argb(255, 254, 101, 53));
+        magnetometerData.setColor(Color.argb(255, 62, 141, 218));
+
+        graph.addSeries(accelerometerData);
+        graph.addSeries(gyroscopeData);
+        graph.addSeries(magnetometerData);
+
+        graph.getLegendRenderer().setBackgroundColor(Color.argb(218, 218, 218, 218));
+        graph.getLegendRenderer().setVisible(true);
+        graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
     }
 
@@ -227,10 +287,9 @@ public class DeviceControlActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         if (experimenterMode || !mConnected) {
-            super.onBackPressed ();
+            super.onBackPressed();
         }
     }
 
@@ -249,7 +308,7 @@ public class DeviceControlActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.menu_connect:
                 ABBIGattReadWriteCharacteristics.bluetoothLeService.connect(mDeviceAddress);
                 return true;
@@ -261,28 +320,47 @@ public class DeviceControlActivity extends Activity {
                         getString(R.string.close));
                 return true;
             case android.R.id.home:
-                //onBackPressed();
+                onBackPressed();
+                /*
                 _countClick++;
                 if(_countClick>3)
                 {
                     toggleExperimenterMode();
                     changeAppModel ();
                 }
+                */
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if(Globals.CURRENT_HAPTIC_BUTTONS_WIRING == Globals.MAIN_VOLUME_ID){
+            if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                mVolumeBar.setProgress(mVolumeBar.getProgress() + 1);
+                return true;
+            } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                mVolumeBar.setProgress(mVolumeBar.getProgress() - 1);
+                return true;
+            }
+        }
+
+        return super.onKeyDown(keyCode, event);
+    }
+
     //------------------------------------------------------------------------
 
-    private void toggleExperimenterMode(){
-        _countClick=0;
+    private void toggleExperimenterMode() {
+        _countClick = 0;
         experimenterMode = !experimenterMode;
         SharedPreferences settings = getSharedPreferences(CONFIG_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean("experimenterMode", experimenterMode);
         editor.commit();
-        String t = experimenterMode ? "You are now in Experimenter mode":"You are now in User mode";
+        String t = experimenterMode ? "You are now in Experimenter/ Parental mode" : "You are now in User mode";
         Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
     }
 
@@ -306,7 +384,7 @@ public class DeviceControlActivity extends Activity {
                 break;
             case UUIDConstants.SoundCtrl_UUID:
                 Globals.soundControlState = dataint;
-                boolean soundOn  = Globals.soundControlState == Globals.SOUND_STATE_ON_ID;
+                boolean soundOn = Globals.soundControlState == Globals.SOUND_STATE_ON_ID;
                 boolean soundOff = Globals.soundControlState == Globals.SOUND_STATE_OFF_ID;
                 updateMuteSwitch(soundOff);
                 updateSoundCtrlButton(soundOn);
@@ -346,23 +424,30 @@ public class DeviceControlActivity extends Activity {
                 //Todo: do something with magnetometer data
                 break;
             case UUIDConstants.IMU_UUID:
-                // for some reason this does not trigger: it seems there is no IMU data notification
+                // for some reason thisl does not trigger: it seems there is no IMU data notification
                 break;
         }
     }
 
-    private void changeAppModel ()
-    {
+    private void changeAppModel() {
+
+        //check current operational mode
+        mUserModeSwitch.setChecked(experimenterMode);
+
         if (!experimenterMode) {
             mSoundCtrl.setVisibility(View.GONE);
             mMuteSwitch.setVisibility(View.VISIBLE);
             mLayoutInfo.setVisibility(View.GONE);
+            mLogDataLayout.setVisibility(View.GONE);
+            //mLayoutAudioMode.setVisibility(View.GONE);
+
             //this.Window.ClearFlags (WindowManagerFlags.KeepScreenOn);
-        }
-        else {
+        } else {
             mMuteSwitch.setVisibility(View.GONE);
             mSoundCtrl.setVisibility(View.VISIBLE);
             mLayoutInfo.setVisibility(View.VISIBLE); // Set to View.VISIBLE in order to see the device address, the status and the data (from displayData())
+            mLogDataLayout.setVisibility(View.VISIBLE);
+            //mLayoutAudioMode.setVisibility(View.VISIBLE);
             //this.Window.AddFlags (WindowManagerFlags.KeepScreenOn);
         }
     }
@@ -437,7 +522,7 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void updateMainVolumeLevel(final int volLevel){
+    private void updateMainVolumeLevel(final int volLevel) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -446,7 +531,7 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void updateMuteSwitch(final boolean mute){
+    private void updateMuteSwitch(final boolean mute) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -455,7 +540,7 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void updateSoundCtrlButton(final boolean soundOn){
+    private void updateSoundCtrlButton(final boolean soundOn) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -464,7 +549,7 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    private void updateAudioMode(final int audioMode){
+    private void updateAudioMode(final int audioMode) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -494,11 +579,10 @@ public class DeviceControlActivity extends Activity {
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
             String uuid = gattService.getUuid().toString();
-            if (uuid.equals(UUIDConstants.Battery_Service_UUID)){
+            if (uuid.equals(UUIDConstants.Battery_Service_UUID)) {
                 ABBIGattReadWriteCharacteristics.batteryService = gattService;
                 ABBIGattReadWriteCharacteristics.readBatteryLevel();
-            }
-            else if (uuid.equals(UUIDConstants.Custom_Service_UUID)){
+            } else if (uuid.equals(UUIDConstants.Custom_Service_UUID)) {
                 ABBIGattReadWriteCharacteristics.customService = gattService;
                 ABBIGattReadWriteCharacteristics.readMainVolumeLevel();
                 ABBIGattReadWriteCharacteristics.readSoundCtrlMode();
@@ -508,8 +592,7 @@ public class DeviceControlActivity extends Activity {
                 ABBIGattReadWriteCharacteristics.readIntermittentStream(2);
                 ABBIGattReadWriteCharacteristics.readIntermittentBPM();
                 ABBIGattReadWriteCharacteristics.readWavFileId();
-            }
-            else if (uuid.equals(UUIDConstants.Motion_Service_UUID)) {
+            } else if (uuid.equals(UUIDConstants.Motion_Service_UUID)) {
                 ABBIGattReadWriteCharacteristics.motionService = gattService;
                 ABBIGattReadWriteCharacteristics.readAccelerometer();
                 ABBIGattReadWriteCharacteristics.readGyroscope();
@@ -533,34 +616,46 @@ public class DeviceControlActivity extends Activity {
     /// <summary>
     /// Wires up local handlers delayed until situation is stable.
     /// </summary>
-    protected void wireUpLocalHandlers ()
-    {
+    protected void wireUpLocalHandlers() {
         mVolumeBar.setOnSeekBarChangeListener(handleVolumeChanged);
         mSoundCtrl.setOnCheckedChangeListener(handleSoundCtrlChanged);
         mMuteSwitch.setOnCheckedChangeListener(handleMuteChanged);
+        mUserModeSwitch.setOnCheckedChangeListener(handleUserModeChanged);
         mRadioSound.setOnCheckedChangeListener(handleSoundModeChanged);
         mButtonSoundProperties.setOnClickListener(handleSoundPropertiesClick);
     }
 
-    private CircularSeekBar.OnCircularSeekBarChangeListener handleVolumeChanged = new CircleSeekBarListener()
-    {
-        @Override
-        public void onProgressChanged(CircularSeekBar seekBar, int progress, boolean fromUser) {
-            if(progress>15){
-                progress = UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX);
-            }
-            textViewVol.setText(Html.fromHtml("<b>Volume<br>" + (progress*100)/Globals.UI_VOLUME_RANGE_MAX + " %</b>"));
-        }
-        @Override
-        public void onStartTrackingTouch(CircularSeekBar seekBar) {
-        }
-        @Override
-        public void onStopTrackingTouch(CircularSeekBar seekBar) {
-            ABBIGattReadWriteCharacteristics.writeMainVolumeLevel(seekBar.getProgress());
+    View.OnClickListener handleVolumeClicked = new View.OnClickListener() {
+        public void onClick(View v) {
+            Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.MAIN_VOLUME_ID;
+            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            v.playSoundEffect(SoundEffectConstants.CLICK);
         }
     };
 
-    private Switch.OnCheckedChangeListener handleSoundCtrlChanged = new Switch.OnCheckedChangeListener(){
+    private CircularSeekBar.OnCircularSeekBarChangeListener handleVolumeChanged = new CircleSeekBarListener() {
+        @Override
+        public void onProgressChanged(CircularSeekBar seekBar, int progress, boolean fromUser) {
+            if (progress > 15) {
+                progress = UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX);
+            }
+            textViewVol.setText(Html.fromHtml("<b>Volume<br>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX) + " dB</b>"));
+
+            ABBIGattReadWriteCharacteristics.writeMainVolumeLevel(seekBar.getProgress());
+
+        }
+
+        @Override
+        public void onStartTrackingTouch(CircularSeekBar seekBar) {
+        }
+
+        @Override
+        public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
+        }
+    };
+
+    private Switch.OnCheckedChangeListener handleSoundCtrlChanged = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked)
@@ -571,7 +666,15 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
-    private Switch.OnCheckedChangeListener handleMuteChanged = new Switch.OnCheckedChangeListener(){
+    private Switch.OnCheckedChangeListener handleUserModeChanged = new Switch.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            toggleExperimenterMode();
+            changeAppModel();
+        }
+    };
+
+    private Switch.OnCheckedChangeListener handleMuteChanged = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked)
@@ -581,26 +684,24 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
-    private RadioGroup.OnCheckedChangeListener handleSoundModeChanged = new RadioGroup.OnCheckedChangeListener(){
+    private RadioGroup.OnCheckedChangeListener handleSoundModeChanged = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             ABBIGattReadWriteCharacteristics.writeAudioMode(checkedId);
         }
     };
 
-    private Button.OnClickListener handleSoundPropertiesClick = new Button.OnClickListener(){
+    private Button.OnClickListener handleSoundPropertiesClick = new Button.OnClickListener() {
         @Override
-        public void onClick(View buttonView){
+        public void onClick(View buttonView) {
             Intent pbActIntent = null;
             int radioChecked = mRadioSound.getCheckedRadioButtonId();
             if (radioChecked == R.id.radioSoundContinuous) {
                 pbActIntent = new Intent(buttonView.getContext(), ContinuousActivity.class);
-            }
-            else if (radioChecked == R.id.radioSoundIntermmitent) {
-                pbActIntent = new Intent (buttonView.getContext(), IntermittentActivity.class);
-            }
-            else if (radioChecked == R.id.radioSoundPlayback) {
-                pbActIntent = new Intent (buttonView.getContext(), PlaybackActivity.class);
+            } else if (radioChecked == R.id.radioSoundIntermmitent) {
+                pbActIntent = new Intent(buttonView.getContext(), IntermittentActivity.class);
+            } else if (radioChecked == R.id.radioSoundPlayback) {
+                pbActIntent = new Intent(buttonView.getContext(), PlaybackActivity.class);
             }
             startActivity(pbActIntent);
         }
@@ -608,8 +709,7 @@ public class DeviceControlActivity extends Activity {
 
     //------------------------------------------------------------------------
 
-    protected void updateLevelIndicator(int n)
-    {
+    protected void updateLevelIndicator(int n) {
 
         progressBar.setProgress(n);
         PBtextView.setText(Html.fromHtml("<b>Battery<br>" + n + " %</b>"));
@@ -617,11 +717,11 @@ public class DeviceControlActivity extends Activity {
     }
 
 
-    public int byteArrayToInt(byte[] data){
+    public int byteArrayToInt(byte[] data) {
         int l = data.length;
         ByteBuffer bb = ByteBuffer.wrap(data);
         int res = 0;
-        switch (l){
+        switch (l) {
             case 1:
                 res = bb.get() & 0xff;
                 break;
@@ -634,7 +734,6 @@ public class DeviceControlActivity extends Activity {
         }
         return res;
     }
-
 
 
 }
