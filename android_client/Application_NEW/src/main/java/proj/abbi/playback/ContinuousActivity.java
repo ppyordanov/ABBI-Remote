@@ -1,7 +1,10 @@
 package proj.abbi.playback;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.text.Html;
@@ -31,7 +34,10 @@ public class ContinuousActivity extends Activity {
     private CircularSeekBar frequencyBar;
     private CircularSeekBar volumeBar;
     private Button saveButton;
+    private Vibrator vibrator;
 
+    private SoundPool sp;
+    private int soundIdVolume, soundIdFrequency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +68,17 @@ public class ContinuousActivity extends Activity {
         //accessibility
         findViewById(R.id.frequencyLayout).setOnClickListener(handleFrequencyClicked);
         findViewById(R.id.volumeLayout).setOnClickListener(handleVolumeClicked);
+
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        //sonification
+        sp = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+        //volume control from the cellphone:
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //load the audio
+        soundIdVolume = sp.load(this, R.raw.g_major,1);
+        soundIdFrequency = sp.load(this,R.raw.g_minor,1);
+
     }
 
 
@@ -132,16 +149,24 @@ public class ContinuousActivity extends Activity {
     View.OnClickListener handleVolumeClicked = new View.OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.CONTINUOUS_VOLUME_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+
+            //volume
+            sp.play(soundIdVolume, Globals.SOUND_SECONDARY_VOLUME, Globals.SOUND_PRIMARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
+
+            vibrator.vibrate(Globals.VOLUME_VIBRATION_MS);
+            //v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
         }
     };
 
     View.OnClickListener handleFrequencyClicked = new View.OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.CONTINUOUS_FREQUENCY_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+
+            //frequency
+            sp.play(soundIdFrequency, Globals.SOUND_PRIMARY_VOLUME, Globals.SOUND_SECONDARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
+
+            vibrator.vibrate(Globals.FREQUENCY_VIBRATION_MS);
+            //v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
         }
     };
 
@@ -159,9 +184,11 @@ public class ContinuousActivity extends Activity {
         }
         @Override
         public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
         }
         @Override
         public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
         }
     };
 
@@ -179,6 +206,7 @@ public class ContinuousActivity extends Activity {
         }
         @Override
         public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
         }
         @Override
         public void onStopTrackingTouch(CircularSeekBar seekBar) {

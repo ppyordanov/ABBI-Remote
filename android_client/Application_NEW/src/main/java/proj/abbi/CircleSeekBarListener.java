@@ -1,7 +1,7 @@
 package proj.abbi;
 
 /**
- * Created by Peter Yordanov on 14.7.2015 lã..
+ * Created by Peter Yordanov on 14.7.2015 l ã..
  */
 public class CircleSeekBarListener implements CircularSeekBar.OnCircularSeekBarChangeListener {
     @Override

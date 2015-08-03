@@ -120,14 +120,6 @@ ADDED from AndroidManifest.xml:81:9
 		ADDED from AndroidManifest.xml:82:13
 	android:launchMode
 		ADDED from AndroidManifest.xml:84:13
-activity#proj.abbi.device.AdvancedOptionsActivity
-ADDED from AndroidManifest.xml:90:9
-	android:label
-		ADDED from AndroidManifest.xml:92:13
-	android:theme
-		ADDED from AndroidManifest.xml:93:13
-	android:name
-		ADDED from AndroidManifest.xml:91:13
 uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:support-v4:22.2.0:20:5

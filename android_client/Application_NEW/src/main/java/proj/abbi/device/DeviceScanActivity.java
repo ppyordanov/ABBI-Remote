@@ -119,12 +119,7 @@ public class DeviceScanActivity extends ListActivity {
                 scanLeDevice(false);
                 break;
             case android.R.id.home:
-                //onBackPressed();
-                _countClick++;
-                if(_countClick>8)
-                {
-                    toggleExperimenterMode();
-                }
+                onBackPressed();
                 return true;
             case R.id.menu_info:
                 AboutDialogue.show(DeviceScanActivity.this, getString(R.string.about),

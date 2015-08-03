@@ -18,7 +18,7 @@
     <string name="about"><![CDATA[
                                 <p><a href="https://www.abbiproject.eu/">www.abbiproject.eu</a></p>
                                 <i>An Android application used to control the ABBI bracelet developed by IIT
-                                 (Italian Institute of Technology). The project will follow the client-server software development paradigm.
+                                 (Italian Institute of Technology). The project follows the client-server software development paradigm.
                                   The server is going to be tied to a central data store and communicate with the Android app via a REST API.</i>]]></string>
     <string name="action_settings">Settings</string>
     <string name="advanced">Advanced Options</string>

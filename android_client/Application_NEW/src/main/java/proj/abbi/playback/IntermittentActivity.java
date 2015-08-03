@@ -1,8 +1,12 @@
 package proj.abbi.playback;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.text.Html;
 import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
@@ -41,6 +45,9 @@ public class IntermittentActivity extends Activity {
     private int currentBpm;
 
     private Button saveButton;
+    private Vibrator vibrator;
+    private SoundPool sp;
+    private int soundIdVolume, soundIdFrequency, soundIdBpm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +98,18 @@ public class IntermittentActivity extends Activity {
         findViewById(R.id.seekBarBpmLayout).setOnClickListener(handleBpmClicked);
 
 
+        //haptic feedback
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+
+        //sonification
+        sp = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+        //volume control from the cellphone:
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //load the audio
+        soundIdVolume = sp.load(this, R.raw.g_major,1);
+        soundIdFrequency = sp.load(this,R.raw.g_minor,1);
+        soundIdBpm = sp.load(this, R.raw.c,1);
+
     }
 
 
@@ -123,85 +142,106 @@ public class IntermittentActivity extends Activity {
     OnClickListener handleVolume1Clicked = new OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_1_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
+
+            //volume 1
+            sp.play(soundIdVolume, Globals.SOUND_SECONDARY_VOLUME, Globals.SOUND_PRIMARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
+
+            vibrator.vibrate(Globals.VOLUME_VIBRATION_MS);
+            //v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
         }
     };
     OnClickListener handleVolume2Clicked = new OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_2_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+
+            //volume 2
+            sp.play(soundIdVolume, Globals.SOUND_SECONDARY_VOLUME, Globals.SOUND_PRIMARY_VOLUME, 0, Globals.SOUND_STREAM2_LOOP, 1);
+
+            vibrator.vibrate(Globals.VOLUME_VIBRATION_MS);
             v.playSoundEffect(SoundEffectConstants.NAVIGATION_RIGHT);
         }
     };
     OnClickListener handleFrequency1Clicked = new OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_1_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+
+            //frequency 1
+            sp.play(soundIdFrequency, Globals.SOUND_PRIMARY_VOLUME, Globals.SOUND_SECONDARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
+
+            vibrator.vibrate(Globals.FREQUENCY_VIBRATION_MS);
+            //v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
         }
     };
     OnClickListener handleFrequency2Clicked = new OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_2_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
+
+            //frequency 2
+            sp.play(soundIdFrequency, Globals.SOUND_PRIMARY_VOLUME, Globals.SOUND_SECONDARY_VOLUME, 0, Globals.SOUND_STREAM2_LOOP, 1);
+
+            vibrator.vibrate(Globals.FREQUENCY_VIBRATION_MS);
+            //v.playSoundEffect(SoundEffectConstants.NAVIGATION_LEFT);
         }
     };
     OnClickListener handleBpmClicked = new OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_BEATS_PER_MINUTE_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.NAVIGATION_DOWN);
+            //v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            vibrator.vibrate(Globals.BPM_VIBRATION_MS);
+
+            //bpm sound
+            sp.play(soundIdBpm, Globals.SOUND_PRIMARY_VOLUME, Globals.SOUND_PRIMARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
         }
     };
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        switch(Globals.CURRENT_HAPTIC_BUTTONS_WIRING) {
-            case (Globals.INTERMITTENT_FREQUENCY_1_ID):
-                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                    frequencyBar1.setProgress(frequencyBar1.getProgress() + 1);
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    frequencyBar1.setProgress(frequencyBar1.getProgress() - 1);
-                    return true;
-                }
-            case (Globals.INTERMITTENT_FREQUENCY_2_ID):
-                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                    frequencyBar2.setProgress(frequencyBar2.getProgress() + 1);
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    frequencyBar2.setProgress(frequencyBar2.getProgress() - 1);
-                    return true;
-                }
-            case (Globals.INTERMITTENT_VOLUME_1_ID):
-                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                    volumeBar1.setProgress(volumeBar1.getProgress() + 1);
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    volumeBar1.setProgress(volumeBar1.getProgress() - 1);
-                    return true;
-                }
-            case (Globals.INTERMITTENT_VOLUME_2_ID):
-                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                    volumeBar2.setProgress(volumeBar2.getProgress() + 1);
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    volumeBar2.setProgress(volumeBar2.getProgress() - 1);
-                    return true;
-                }
-            case (Globals.INTERMITTENT_BEATS_PER_MINUTE_ID):
-                if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-                    bpmBar.setProgress(bpmBar.getProgress() + 1);
-                    return true;
-                } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-                    bpmBar.setProgress(bpmBar.getProgress() -1 );
-                    return true;
-                }
-        }
+        if(!lockRatio.isChecked()) {
 
+            switch (Globals.CURRENT_HAPTIC_BUTTONS_WIRING) {
+                case (Globals.INTERMITTENT_FREQUENCY_1_ID):
+                    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                        frequencyBar1.setProgress(frequencyBar1.getProgress() + 1);
+                        return true;
+                    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        frequencyBar1.setProgress(frequencyBar1.getProgress() - 1);
+                        return true;
+                    }
+                case (Globals.INTERMITTENT_FREQUENCY_2_ID):
+                    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                        frequencyBar2.setProgress(frequencyBar2.getProgress() + 1);
+                        return true;
+                    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        frequencyBar2.setProgress(frequencyBar2.getProgress() - 1);
+                        return true;
+                    }
+                case (Globals.INTERMITTENT_VOLUME_1_ID):
+                    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                        volumeBar1.setProgress(volumeBar1.getProgress() + 1);
+                        return true;
+                    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        volumeBar1.setProgress(volumeBar1.getProgress() - 1);
+                        return true;
+                    }
+                case (Globals.INTERMITTENT_VOLUME_2_ID):
+                    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                        volumeBar2.setProgress(volumeBar2.getProgress() + 1);
+                        return true;
+                    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        volumeBar2.setProgress(volumeBar2.getProgress() - 1);
+                        return true;
+                    }
+                case (Globals.INTERMITTENT_BEATS_PER_MINUTE_ID):
+                    if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+                        bpmBar.setProgress(bpmBar.getProgress() + 1);
+                        return true;
+                    } else if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
+                        bpmBar.setProgress(bpmBar.getProgress() - 1);
+                        return true;
+                    }
+            }
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -250,6 +290,7 @@ public class IntermittentActivity extends Activity {
                     ai2.setFreq(ai1.getFreq());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
                     frequencyBar2.setProgress(frequencyBar1.getProgress());
+                    Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_1_ID;
                 }
 
             }
@@ -264,6 +305,7 @@ public class IntermittentActivity extends Activity {
                     ai1.setFreq(ai2.getFreq());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
                     frequencyBar1.setProgress(frequencyBar2.getProgress());
+                    Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_FREQUENCY_2_ID;
                 }
 
             }
@@ -278,6 +320,7 @@ public class IntermittentActivity extends Activity {
                     ai2.setVolume(ai1.getVolume());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM2_ID, ai2);
                     volumeBar2.setProgress(volumeBar1.getProgress());
+                    Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_1_ID;
                 }
 
             }
@@ -292,6 +335,7 @@ public class IntermittentActivity extends Activity {
                     ai1.setVolume(ai2.getVolume());
                     ABBIGattReadWriteCharacteristics.writeIntermittentStream(Globals.ABBI_INTERMITTENT_STREAM1_ID, ai1);
                     volumeBar1.setProgress(volumeBar2.getProgress());
+                    Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.INTERMITTENT_VOLUME_2_ID;
                 }
 
             }
@@ -308,9 +352,11 @@ public class IntermittentActivity extends Activity {
 
         @Override
         public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
         }
         @Override
         public void onStopTrackingTouch(CircularSeekBar seekBar) {
+
         }
     };
 

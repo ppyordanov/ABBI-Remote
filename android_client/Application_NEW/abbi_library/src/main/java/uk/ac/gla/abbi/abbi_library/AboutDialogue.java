@@ -6,9 +6,11 @@ package uk.ac.gla.abbi.abbi_library;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.graphics.Color;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.InflateException;
@@ -54,10 +56,15 @@ public class AboutDialogue
         tvAbout.setText(Html.fromHtml(aboutText));
         tvAbout.setMovementMethod(LinkMovementMethod.getInstance());
         tvAbout.setPadding(20, 20, 20, 20);
-        new AlertDialog.Builder(activity)
-                .setTitle(appName + " " + versionNumber)
+        Dialog dialog = new AlertDialog.Builder(activity)
+                .setTitle(Html.fromHtml("<font color='#000000'>" + appName + " " + versionNumber + "</font>"))
                 .setPositiveButton(okButtonText, null)
                 .setView(about)
                 .show();
+
+        int dividerId = dialog.getContext().getResources().getIdentifier("android:id/titleDivider", null, null);
+        View divider = dialog.findViewById(dividerId);
+        divider.setBackgroundColor(Color.BLACK);
+
     }
 }

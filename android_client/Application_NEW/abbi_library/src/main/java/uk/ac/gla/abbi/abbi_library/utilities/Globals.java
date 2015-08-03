@@ -1,7 +1,11 @@
 package uk.ac.gla.abbi.abbi_library.utilities;
 
+import android.media.AudioManager;
+import android.media.SoundPool;
+
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioContinuous;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioIntermittent;
+import uk.ac.gla.peteryordanov.abbi_library.gatt_communication.R;
 
 /**
  * Created by Peter Yordanov on 9.7.2015 ã..
@@ -86,6 +90,20 @@ public class Globals {
     public static final int INTERMITTENT_FREQUENCY_1_ID = 22;
     public static final int INTERMITTENT_FREQUENCY_2_ID = 23;
     public static final int INTERMITTENT_BEATS_PER_MINUTE_ID = 24;
+
+    //accessibility for vibration feedback
+    public static final int VOLUME_VIBRATION_MS = 100;
+    public static final int FREQUENCY_VIBRATION_MS = 500;
+    public static final int BPM_VIBRATION_MS = 1000;
+
+
+    //sonification constants
+
+    public static final int SOUND_STREAM1_LOOP = 0;
+    public static final int SOUND_STREAM2_LOOP = 1;
+    public static final float SOUND_PRIMARY_VOLUME = 1;
+    public static final float SOUND_SECONDARY_VOLUME = (float) 0.5;
+
 
     //ABBI playback sound files list
     public static final String[] SOUND_FILES_PLAYLIST = {"short_explosion.wav",

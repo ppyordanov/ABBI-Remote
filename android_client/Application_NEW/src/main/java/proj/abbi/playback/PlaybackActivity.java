@@ -66,11 +66,6 @@ public class PlaybackActivity extends ListActivity {
 
         String t = UtilityFunctions.lookUpFileNameBasedOnIndex(position, Globals.SOUND_FILES_PLAYLIST);
         Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
-        //(ListView) findViewById (android.R.id.list).check (wavFileName, true);
 
-        /*Intent myIntent = new Intent (this, DeviceControlActivity.class);
-        //myIntent.PutExtra ("SelectedWavFile", wavFileName);
-        setResult(RESULT_OK, myIntent);
-        finish();*/
     }
 }

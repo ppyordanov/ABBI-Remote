@@ -29,6 +29,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Vibrator;
@@ -58,6 +60,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
+import java.util.Random;
 
 import proj.abbi.CircleSeekBarListener;
 import proj.abbi.CircularSeekBar;
@@ -110,7 +113,12 @@ public class DeviceControlActivity extends Activity {
     private int _countClick = 0;
     private boolean experimenterMode = false;
 
-    private Vibrator mVolumeVibrator;
+    //accessibility
+    private Vibrator vibrator;
+    private SoundPool sp;
+    private int soundIdVolume;
+
+    private LineGraphSeries<DataPoint> accelerometerData;
 
     //------------------------------------------------------------------------
 
@@ -218,26 +226,46 @@ public class DeviceControlActivity extends Activity {
 
         //accessibility
         findViewById(R.id.linearLayoutVolume).setOnClickListener(handleVolumeClicked);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+        //sonification
+        sp = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
+        //volume control from the cellphone:
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        //load the audio
+        soundIdVolume = sp.load(this, R.raw.g_major,1);
 
         //visualize data
+        Random random = new Random();
+        int max = 100;
+
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> accelerometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6)
+
+        //sensor data sample plot
+        accelerometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
+                new DataPoint(0, random.nextInt((max) + 1)),
+                new DataPoint(1, random.nextInt((max) + 1)),
+                new DataPoint(2, random.nextInt((max) + 1)),
+                new DataPoint(3, random.nextInt((max) + 1)),
+                new DataPoint(4, random.nextInt((max) + 1)),
+
         });
 
         LineGraphSeries<DataPoint> gyroscopeData = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(3, 4),
-                new DataPoint(12, 1),
+                new DataPoint(0, random.nextInt((max) + 1)),
+                new DataPoint(1, random.nextInt((max) + 1)),
+                new DataPoint(2, random.nextInt((max) + 1)),
+                new DataPoint(3, random.nextInt((max) + 1)),
+                new DataPoint(4, random.nextInt((max) + 1)),
+
         });
 
         LineGraphSeries<DataPoint> magnetometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
-                new DataPoint(3, 4),
-                new DataPoint(12, 1),
+                new DataPoint(0, random.nextInt((max) + 1)),
+                new DataPoint(2, random.nextInt((max) + 1)),
+                new DataPoint(3, random.nextInt((max) + 1)),
+                new DataPoint(4, random.nextInt((max) + 1)),
+
         });
 
         accelerometerData.setTitle("Accelerometer");
@@ -321,14 +349,6 @@ public class DeviceControlActivity extends Activity {
                 return true;
             case android.R.id.home:
                 onBackPressed();
-                /*
-                _countClick++;
-                if(_countClick>3)
-                {
-                    toggleExperimenterMode();
-                    changeAppModel ();
-                }
-                */
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -439,48 +459,20 @@ public class DeviceControlActivity extends Activity {
             mMuteSwitch.setVisibility(View.VISIBLE);
             mLayoutInfo.setVisibility(View.GONE);
             mLogDataLayout.setVisibility(View.GONE);
-            //mLayoutAudioMode.setVisibility(View.GONE);
 
-            //this.Window.ClearFlags (WindowManagerFlags.KeepScreenOn);
         } else {
             mMuteSwitch.setVisibility(View.GONE);
             mSoundCtrl.setVisibility(View.VISIBLE);
-            mLayoutInfo.setVisibility(View.VISIBLE); // Set to View.VISIBLE in order to see the device address, the status and the data (from displayData())
+            mLayoutInfo.setVisibility(View.VISIBLE);
             mLogDataLayout.setVisibility(View.VISIBLE);
-            //mLayoutAudioMode.setVisibility(View.VISIBLE);
-            //this.Window.AddFlags (WindowManagerFlags.KeepScreenOn);
+
         }
     }
 
     /* Todo: develop a movement recognizer class (based on the android code from Charlotte)
        Todo: develop the recognizeMovementMethod (below) that calls that class and selects sound to play
      */
-    /*private void recognizeMovement() {
-        int[] mybuffer; // declared somewhere above
-        boolean recognized; // declared somewhere above
-        int soundFile;
-        mybuffer.add(dataint);
-        if (mybuffer.length > 5) {
-            int gesture = MyGestureRecognitionClass.recognize(mybuffer);
-            if (gesture != 0) {
-                recognized = true;
-                switch (gesture)
-                case 1:
-                    soundFile = blabla;
-                    break;
-                case 2:
-                    soundFile = blabla2;
-                    break;
-                etc...
 
-            }
-            if (recognized) {
-                mybuffer = new int[]{}; // clear the buffer
-                ABBIGattReadWriteCharacteristics.writeWavFileId(soundFile); // change the sound file
-                ABBIGattReadWriteCharacteristics.writeAudioMode(ABBISoundMode.Playback);
-            }
-        }
-    }*/
 
     //------------------------------------------------------------------------
 
@@ -505,10 +497,14 @@ public class DeviceControlActivity extends Activity {
     private void displayData(final String data) {
         if (data != null) {
             runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mDataField.setText(data);
-                }
+
+                    @Override
+                    public void run() {
+                        mDataField.setText(data);
+                    }
+
+
+
             });
         }
     }
@@ -628,8 +624,11 @@ public class DeviceControlActivity extends Activity {
     View.OnClickListener handleVolumeClicked = new View.OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.MAIN_VOLUME_ID;
-            v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
-            v.playSoundEffect(SoundEffectConstants.CLICK);
+            //v.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            vibrator.vibrate(Globals.VOLUME_VIBRATION_MS);
+
+            //volume main
+            sp.play(soundIdVolume, Globals.SOUND_SECONDARY_VOLUME, Globals.SOUND_PRIMARY_VOLUME, 0, Globals.SOUND_STREAM1_LOOP, 1);
         }
     };
 
@@ -647,6 +646,7 @@ public class DeviceControlActivity extends Activity {
 
         @Override
         public void onStartTrackingTouch(CircularSeekBar seekBar) {
+
         }
 
         @Override
@@ -661,8 +661,13 @@ public class DeviceControlActivity extends Activity {
             if (isChecked)
                 ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_ON_ID);
             else
-                ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_OFF_ID);
-
+                if(mMuteSwitch.isChecked()) {
+                    ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_OFF_ID);
+                }
+                else
+                {
+                    ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_TRIGGER_ID);
+                }
         }
     };
 
@@ -688,6 +693,7 @@ public class DeviceControlActivity extends Activity {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
             ABBIGattReadWriteCharacteristics.writeAudioMode(checkedId);
+
         }
     };
 
