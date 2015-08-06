@@ -3,13 +3,16 @@
     android:id="@+id/aboutView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <linearlayout android:orientation="horizontal"
+
+    <linearlayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="5dp">
-        <textview android:id="@+id/aboutText"
+
+        <textview
+            android:id="@+id/aboutText"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            />
+            android:layout_height="fill_parent" />
     </linearlayout>
 </scrollview>

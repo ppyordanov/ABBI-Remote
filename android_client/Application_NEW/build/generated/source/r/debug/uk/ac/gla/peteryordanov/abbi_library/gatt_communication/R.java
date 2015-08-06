@@ -7,9 +7,6 @@
 package uk.ac.gla.peteryordanov.abbi_library.gatt_communication;
 
 public final class R {
-	public static final class anim {
-		public static final int battery_animation = 0x7f04000a;
-	}
 	public static final class dimen {
 		public static final int activity_horizontal_margin = 0x7f08003c;
 		public static final int activity_vertical_margin = 0x7f08003d;
@@ -43,7 +40,6 @@ public final class R {
 		public static final int volume = 0x7f020054;
 	}
 	public static final class id {
-		public static final int AnimBatt = 0x7f090090;
 		public static final int aboutText = 0x7f090050;
 		public static final int aboutView = 0x7f09004f;
 		public static final int buttonContSave = 0x7f090058;
@@ -57,11 +53,11 @@ public final class R {
 		public static final int linearLayoutInfo = 0x7f090059;
 		public static final int linearLayoutVolume = 0x7f090065;
 		public static final int lockRatioCheckBox = 0x7f090080;
-		public static final int menu_connect = 0x7f090092;
-		public static final int menu_disconnect = 0x7f090093;
-		public static final int menu_refresh = 0x7f090091;
-		public static final int menu_scan = 0x7f090095;
-		public static final int menu_stop = 0x7f090096;
+		public static final int menu_connect = 0x7f090091;
+		public static final int menu_disconnect = 0x7f090092;
+		public static final int menu_refresh = 0x7f090090;
+		public static final int menu_scan = 0x7f090094;
+		public static final int menu_stop = 0x7f090095;
 		public static final int radioGroup1 = 0x7f090069;
 		public static final int radioSoundContinuous = 0x7f09006a;
 		public static final int radioSoundIntermmitent = 0x7f09006b;
@@ -164,6 +160,5 @@ public final class R {
 		public static final int Theme_Sample = 0x7f0c00d7;
 		public static final int Widget = 0x7f0c00dd;
 		public static final int Widget_SampleMessage = 0x7f0c011f;
-		public static final int Widget_SampleMessageTile = 0x7f0c0120;
 	}
 }

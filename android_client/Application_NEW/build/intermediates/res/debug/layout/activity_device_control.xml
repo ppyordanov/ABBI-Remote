@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -22,69 +21,87 @@
     tools:context=".MainActivity">
 
 
-
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutInfo">
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_device_address"
                 android:textSize="18sp"
                 android:visibility="visible"
-                android:contentDescription="@string/deviceAddressDesc"/>
-            <Space android:layout_width="5dp"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/device_address"
+                android:contentDescription="@string/deviceAddressDesc" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/device_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_state"
                 android:textSize="18sp"
-                android:contentDescription="@string/deviceStateDesc"/>
-            <Space android:layout_width="5dp"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/connection_state"
+                android:contentDescription="@string/deviceStateDesc" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/connection_state"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/disconnected"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/label_data"
                 android:textSize="18sp"
-                android:contentDescription="@string/deviceDataDesc"/>
-            <Space android:layout_width="5dp"
-                android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/data_value"
+                android:contentDescription="@string/deviceDataDesc" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/data_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/no_data"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
-
 
 
     <LinearLayout
@@ -116,7 +133,7 @@
                 android:secondaryProgress="100"
                 android:progressDrawable="@drawable/progress_bar"
                 android:layout_centerHorizontal="true"
-                android:contentDescription="@string/batteryDesc"/>
+                android:contentDescription="@string/batteryDesc" />
 
             <TextView
                 android:text="@string/battery"
@@ -127,7 +144,7 @@
                 android:layout_alignTop="@id/progressBar"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="30dp"
                 android:background="#00000000"
                 android:id="@+id/PBtextView"
                 android:layout_alignParentTop="true"
@@ -147,7 +164,7 @@
                 android:layout_below="@+id/progressBar"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/userToggleDesc"
-                android:text="Parent Mode"/>
+                android:text="Parent Mode" />
 
             <Switch
                 android:width="200dp"
@@ -163,7 +180,7 @@
                 android:layout_below="@+id/modeSwitch"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/soundOnOffDesc"
-                android:text="Sound"/>
+                android:text="Sound" />
 
             <Switch
                 android:width="200dp"
@@ -179,12 +196,10 @@
                 android:layout_below="@+id/modeSwitch"
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/muteOnOffSwitch"
-                android:text="Mute"/>
-
+                android:text="Mute" />
 
 
         </RelativeLayout>
-
 
 
     </LinearLayout>
@@ -210,7 +225,6 @@
             android:gravity="center">
 
 
-
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -223,6 +237,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center">
+
                     <proj.abbi.CircularSeekBar
                         android:id="@+id/seekBarVol"
                         android:layout_width="match_parent"
@@ -231,12 +246,12 @@
                         android:progress="1"
                         android:fitsSystemWindows="true"
                         android:layout_gravity="center_vertical"
-                        android:contentDescription="@string/speakerVolumeDesc"/>
+                        android:contentDescription="@string/speakerVolumeDesc" />
 
                     <TextView
                         android:id="@+id/textViewVol"
                         android:layout_width="match_parent"
-                        android:layout_height="30dp"
+                        android:layout_height="100dp"
                         android:layout_alignBottom="@id/seekBarVol"
                         android:layout_alignLeft="@id/seekBarVol"
                         android:layout_alignRight="@id/seekBarVol"
@@ -267,26 +282,30 @@
                     android:id="@+id/radioGroup1"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
+
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
                         android:text="@string/continuous"
                         android:id="@+id/radioSoundContinuous"
-                        android:contentDescription="@string/continuousSoundDesc"/>
+                        android:contentDescription="@string/continuousSoundDesc" />
+
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/intermittent"
                         android:id="@+id/radioSoundIntermmitent"
-                        android:contentDescription="@string/intermittentSoundDesc"/>
+                        android:contentDescription="@string/intermittentSoundDesc" />
+
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/playback"
                         android:id="@+id/radioSoundPlayback"
-                        android:contentDescription="@string/playbackSoundDesc"/>
+                        android:contentDescription="@string/playbackSoundDesc" />
                 </RadioGroup>
+
                 <Button
                     android:text="@string/properties"
                     android:layout_width="wrap_content"
@@ -294,7 +313,7 @@
                     android:id="@+id/buttonSoundProperties"
                     android:background="@drawable/custom_button"
                     android:textColor="#fff"
-                    android:contentDescription="@string/propertiesDesc"/>
+                    android:contentDescription="@string/propertiesDesc" />
 
 
             </LinearLayout>
@@ -308,13 +327,14 @@
         android:id="@+id/logDataLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
-    <com.jjoe64.graphview.GraphView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/graph" />
+        android:layout_alignParentBottom="true">
 
-        </RelativeLayout>
+        <com.jjoe64.graphview.GraphView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:id="@+id/graph" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
 

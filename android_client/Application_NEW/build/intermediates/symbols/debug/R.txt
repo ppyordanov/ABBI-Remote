@@ -8,7 +8,6 @@ int anim abc_slide_in_bottom 0x7f040006
 int anim abc_slide_in_top 0x7f040007
 int anim abc_slide_out_bottom 0x7f040008
 int anim abc_slide_out_top 0x7f040009
-int anim battery_animation 0x7f04000a
 int attr actionBarDivider 0x7f010088
 int attr actionBarItemBackground 0x7f010089
 int attr actionBarPopupTheme 0x7f010082
@@ -486,7 +485,6 @@ int drawable thumb 0x7f020051
 int drawable tile 0x7f020052
 int drawable track 0x7f020053
 int drawable volume 0x7f020054
-int id AnimBatt 0x7f090090
 int id PBtextView 0x7f090060
 int id aboutText 0x7f090050
 int id aboutView 0x7f09004f
@@ -553,12 +551,12 @@ int id list_item 0x7f09002a
 int id lockRatioCheckBox 0x7f090080
 int id logDataLayout 0x7f09006e
 int id media_actions 0x7f090086
-int id menu_connect 0x7f090092
-int id menu_disconnect 0x7f090093
-int id menu_info 0x7f090094
-int id menu_refresh 0x7f090091
-int id menu_scan 0x7f090095
-int id menu_stop 0x7f090096
+int id menu_connect 0x7f090091
+int id menu_disconnect 0x7f090092
+int id menu_info 0x7f090093
+int id menu_refresh 0x7f090090
+int id menu_scan 0x7f090094
+int id menu_stop 0x7f090095
 int id middle 0x7f090015
 int id middleView 0x7f090052
 int id modeSwitch 0x7f090061

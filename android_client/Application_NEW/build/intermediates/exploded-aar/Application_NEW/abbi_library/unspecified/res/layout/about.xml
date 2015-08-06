@@ -3,13 +3,16 @@
     android:id="@+id/aboutView"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <linearlayout android:orientation="horizontal"
+
+    <linearlayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="5dp">
-        <textview android:id="@+id/aboutText"
+
+        <textview
+            android:id="@+id/aboutText"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            />
+            android:layout_height="fill_parent" />
     </linearlayout>
 </scrollview><!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/layout/about.xml -->

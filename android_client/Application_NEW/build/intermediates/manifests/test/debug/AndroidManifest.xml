@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="proj.abbi.test">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="proj.abbi.test">
 
     <uses-sdk android:minSdkVersion="18" android:targetSdkVersion="21" />
 
@@ -9,8 +8,6 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-                     android:targetPackage="proj.abbi"
-                     android:handleProfiling="false"
-                     android:functionalTest="false"
-                     android:label="Tests for proj.abbi"/>
+        android:targetPackage="proj.abbi" android:handleProfiling="false"
+        android:functionalTest="false" android:label="Tests for proj.abbi" />
 </manifest>

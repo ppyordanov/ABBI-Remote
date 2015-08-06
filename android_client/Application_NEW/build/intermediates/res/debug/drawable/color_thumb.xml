@@ -7,6 +7,5 @@
         android:height="40dp"
         android:endColor="#FF569BDA"
         android:startColor="#FF569BDA" />
-    <corners
-        android:radius="7dp"/>
+    <corners android:radius="7dp" />
 </shape><!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/drawable/color_thumb.xml -->

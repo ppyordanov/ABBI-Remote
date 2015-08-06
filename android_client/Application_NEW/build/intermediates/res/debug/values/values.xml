@@ -272,8 +272,8 @@
     </string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/build/intermediates/exploded-aar/Application_NEW/abbi_library/unspecified/res/values/values.xml -->
     <eat-comment/>
-    <string name="label_data">Data:</string>
-    <string name="label_device_address">Device address:</string>
+    <string name="label_data">Sensor Data:</string>
+    <string name="label_device_address">Device Address:</string>
     <string name="label_state">State:</string>
     <string name="library_description">
         A library to be used in the ABBI (a bracelet designed for blind individuals) Android development process.

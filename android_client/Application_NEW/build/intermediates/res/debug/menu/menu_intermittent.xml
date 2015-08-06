@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.lth.certec.abbi2.playback.IntermittentActivity">
 
-    <item android:id="@+id/menu_info"
+    <item
+        android:id="@+id/menu_info"
         android:icon="@android:drawable/ic_menu_info_details"
-        android:title="@string/menu_info"/>
+        android:title="@string/menu_info" />
 </menu>
 <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/src/main/res/menu/menu_intermittent.xml -->

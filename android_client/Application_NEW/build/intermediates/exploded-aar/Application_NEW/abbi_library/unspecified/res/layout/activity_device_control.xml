@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2013 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2013 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -14,10 +13,10 @@
      limitations under the License.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,55 +25,76 @@
         android:id="@+id/linearLayoutInfo"
         android:visibility="visible">
 
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_device_address"
-                      android:textSize="18sp"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_device_address"
+                android:textSize="18sp"
                 android:visibility="visible" />
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/device_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"/>
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/device_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_state"
-                      android:textSize="18sp"/>
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/connection_state"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:text="@string/disconnected"
-                      android:textSize="18sp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_state"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/connection_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/disconnected"
+                android:textSize="18sp" />
         </LinearLayout>
 
-        <LinearLayout android:orientation="horizontal"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_margin="10dp">
-            <TextView android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:text="@string/label_data"
-                      android:textSize="18sp"/>
-            <Space android:layout_width="5dp"
-                   android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/data_value"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:text="@string/no_data"
-                      android:textSize="18sp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_data"
+                android:textSize="18sp" />
+
+            <Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/data_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/no_data"
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -84,6 +104,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutBattery"
         android:layout_margin="5dp">
+
         <ImageView
             android:src="@drawable/ic_battery_full"
             android:layout_width="wrap_content"
@@ -91,14 +112,8 @@
             android:scaleType="fitXY"
             android:id="@+id/iconBattery"
             android:adjustViewBounds="true" />
-        <ImageView
-            android:src="@anim/battery_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:adjustViewBounds="true"
-            android:id="@+id/animBattery"
-            android:visibility="gone" />
+
+
         <TextView
             android:text="@string/battery"
             android:gravity="center"
@@ -108,6 +123,7 @@
             android:id="@+id/textView1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -117,6 +133,7 @@
             android:paddingRight="10dp"
             android:paddingLeft="10dp"
             android:layout_gravity="center_vertical">
+
             <View
                 android:layout_weight="0.25"
                 android:background="@drawable/roundrectred"
@@ -127,6 +144,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp" />
+
             <View
                 android:layout_weight="0.25"
                 android:background="@drawable/roundrectyell"
@@ -137,6 +155,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp" />
+
             <View
                 android:layout_weight="0.25"
                 android:background="@drawable/roundrectgreen"
@@ -147,6 +166,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp" />
+
             <View
                 android:layout_weight="0.25"
                 android:background="@drawable/roundrectgreen"
@@ -160,12 +180,14 @@
                 android:alpha="0" />
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutMute"
         android:layout_margin="10dp">
+
         <ImageView
             android:src="@drawable/mute"
             android:layout_width="wrap_content"
@@ -173,6 +195,7 @@
             android:scaleType="fitXY"
             android:adjustViewBounds="true"
             android:id="@+id/iconPower" />
+
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -181,18 +204,21 @@
             android:checked="false"
             android:layout_marginLeft="10dp" />
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutVolume"
         android:layout_margin="10dp">
+
         <ImageView
             android:src="@drawable/volume"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
+
         <TextView
             android:text="@string/volume"
             android:gravity="center"
@@ -203,6 +229,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textAlignment="center" />
+
         <SeekBar
             android:id="@+id/seekBar1"
             android:layout_width="match_parent"
@@ -212,11 +239,13 @@
             android:fitsSystemWindows="true"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linearLayoutAudioMode">
+
         <TextView
             android:text="@string/mode"
             android:textAppearance="?android:attr/textAppearanceMedium"
@@ -225,35 +254,41 @@
             android:id="@+id/textView3"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dp" />
+
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/radioGroup1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="@string/continuous"
                 android:id="@+id/radioSoundContinuous" />
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/intermittent"
                 android:id="@+id/radioSoundIntermmitent" />
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/playback"
                 android:id="@+id/radioSoundPlayback" />
         </RadioGroup>
+
         <Button
             android:text="@string/properties"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/buttonSoundProperties" />
     </LinearLayout>
+
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

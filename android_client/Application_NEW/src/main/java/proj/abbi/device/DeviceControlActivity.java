@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2013 The Android Open Source Project
+ * Copyright (C) 2015 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,11 +36,9 @@ import android.os.IBinder;
 import android.os.Vibrator;
 import android.text.Html;
 import android.util.Log;
-import android.view.HapticFeedbackConstants;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SoundEffectConstants;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -98,7 +96,6 @@ public class DeviceControlActivity extends Activity {
     private boolean mConnected = false;
 
     private LinearLayout mLayoutInfo = null;
-    private LinearLayout mLayoutAudioMode = null;
     private RelativeLayout mLogDataLayout = null;
     private CircularSeekBar mVolumeBar = null;
     private Switch mSoundCtrl = null;
@@ -110,21 +107,26 @@ public class DeviceControlActivity extends Activity {
     private TextView PBtextView = null;
     private TextView textViewVol = null;
 
-    private int _countClick = 0;
     private boolean experimenterMode = false;
 
-    //accessibility
+    //accessibility-related fields
     private Vibrator vibrator;
     private SoundPool sp;
     private int soundIdVolume;
 
     private LineGraphSeries<DataPoint> accelerometerData;
 
-    //------------------------------------------------------------------------
 
-    // Code to manage Service lifecycle.
+    /**
+     * Manage the service cycle when connecting to BLE devices.
+     */
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
+        /**
+         * Specify behaviour on sucessful connection.
+         * @param componentName
+         * @param service
+         */
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             ABBIGattReadWriteCharacteristics.bluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
@@ -136,19 +138,25 @@ public class DeviceControlActivity extends Activity {
             ABBIGattReadWriteCharacteristics.bluetoothLeService.connect(mDeviceAddress);
         }
 
+        /**
+         * Specify behaviour when the service is disconnected.
+         * @param componentName
+         */
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
             ABBIGattReadWriteCharacteristics.bluetoothLeService = null;
-            //finish();
+
         }
     };
 
-    // Handles various events fired by the Service.
-    // ACTION_GATT_CONNECTED: connected to a GATT server.
-    // ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
-    // ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
-    // ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
-    //                        or notification operations.
+    /**
+     * Handles various events fired by the Service.
+     * ACTION_GATT_CONNECTED: connected to a GATT server.
+     * ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
+     * ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
+     * ACTION_DATA_AVAILABLE: received data from the device.  This can be a result of read
+     * or notification operations.
+     */
     private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -163,6 +171,7 @@ public class DeviceControlActivity extends Activity {
                 invalidateOptionsMenu();
                 clearUI();
                 finish();
+
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 // Show all the supported services and characteristics on the user interface.
                 displayGattServices(ABBIGattReadWriteCharacteristics.bluetoothLeService.getSupportedGattServices());
@@ -174,27 +183,33 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+    /**
+     * Reset the additional data field ("Sensor Data")
+     */
     private void clearUI() {
-        //mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
         mDataField.setText(R.string.no_data);
     }
 
-    //------------------------------------------------------------------------
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_control);
 
+        /**
+         * Showcase device characteristics on the UI:
+         *  - device name
+         *  - device MAC address
+         *  - sensor data, if available
+         */
         final Intent intent = getIntent();
         mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
+
+        //Initialize all of the layouts and components manipulated by this class
+
         mLayoutInfo = (LinearLayout) findViewById(R.id.linearLayoutInfo);
-        mLayoutAudioMode = (LinearLayout) findViewById(R.id.linearLayoutAudioMode);
         mLogDataLayout = (RelativeLayout) findViewById(R.id.logDataLayout);
-
-        // Sets up UI references.
-
         mAddressField = (TextView) findViewById(R.id.device_address);
         mConnectionState = (TextView) findViewById(R.id.connection_state);
         mDataField = (TextView) findViewById(R.id.data_value);
@@ -206,7 +221,6 @@ public class DeviceControlActivity extends Activity {
         mSoundCtrl = (Switch) findViewById(R.id.soundOnOffSwitch);
         mMuteSwitch = (Switch) findViewById(R.id.muteSwitch);
         mUserModeSwitch = (Switch) findViewById(R.id.modeSwitch);
-
 
         Resources res = getResources();
         Drawable drawable = res.getDrawable(R.drawable.progress_bar);
@@ -224,24 +238,30 @@ public class DeviceControlActivity extends Activity {
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
-        //accessibility
+        //accessibility-related features
         findViewById(R.id.linearLayoutVolume).setOnClickListener(handleVolumeClicked);
-        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE); // vibratory haptic feedback enabled by the vibrator service
 
         //sonification
         sp = new SoundPool(20, AudioManager.STREAM_MUSIC, 0);
         //volume control from the cellphone:
         this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         //load the audio
-        soundIdVolume = sp.load(this, R.raw.g_major,1);
+        soundIdVolume = sp.load(this, R.raw.g_major, 1);
 
         //visualize data
         Random random = new Random();
         int max = 100;
 
+        //initialize the graph
         GraphView graph = (GraphView) findViewById(R.id.graph);
 
-        //sensor data sample plot
+        /**
+         * Sensor data plot - simulation using random values to generate a visualization:
+         *  - accelerometer - green
+         *  - gyroscope - red
+         *  - magnetometer - blue
+         */
         accelerometerData = new LineGraphSeries<DataPoint>(new DataPoint[]{
                 new DataPoint(0, random.nextInt((max) + 1)),
                 new DataPoint(1, random.nextInt((max) + 1)),
@@ -268,18 +288,26 @@ public class DeviceControlActivity extends Activity {
 
         });
 
+        //set the labels for the LineGraphSeries
         accelerometerData.setTitle("Accelerometer");
         gyroscopeData.setTitle("Gyroscope");
         magnetometerData.setTitle("Magnetometer");
 
+        //set the colors for the different series
         accelerometerData.setColor(Color.argb(255, 81, 218, 99));
         gyroscopeData.setColor(Color.argb(255, 254, 101, 53));
         magnetometerData.setColor(Color.argb(255, 62, 141, 218));
 
+        //add all the three series to the main GraphView
         graph.addSeries(accelerometerData);
         graph.addSeries(gyroscopeData);
         graph.addSeries(magnetometerData);
 
+        /**
+         * - make the legend visible
+         * - align to the top of the graph
+         * - set the background color to light gray
+         */
         graph.getLegendRenderer().setBackgroundColor(Color.argb(218, 218, 218, 218));
         graph.getLegendRenderer().setVisible(true);
         graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
@@ -295,7 +323,7 @@ public class DeviceControlActivity extends Activity {
             final boolean result = ABBIGattReadWriteCharacteristics.bluetoothLeService.connect(mDeviceAddress);
             Log.d(TAG, "Connect request result=" + result);
         }
-        // Restore preferences
+        // Restore user preferences
         SharedPreferences settings = getSharedPreferences(CONFIG_FILE, 0);
         experimenterMode = settings.getBoolean("experimenterMode", false);
         changeAppModel();
@@ -314,13 +342,11 @@ public class DeviceControlActivity extends Activity {
         ABBIGattReadWriteCharacteristics.bluetoothLeService = null;
     }
 
-    @Override
-    public void onBackPressed() {
-        if (experimenterMode || !mConnected) {
-            super.onBackPressed();
-        }
-    }
-
+    /**
+     * Create the ActionBar menu and set the visibility of the buttons depending on the current state.
+     * - If the application is in idle state - the scan button is visible
+     * - Otherwise, the stop button is available
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.gatt_services, menu);
@@ -334,6 +360,12 @@ public class DeviceControlActivity extends Activity {
         return true;
     }
 
+    /**
+     * Trigger a relevant action depending on which ActionBar menu item was interacted with.
+     *
+     * @param item the selected MenuItem is passed as an input parameter
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -354,11 +386,17 @@ public class DeviceControlActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /**
+     * Override the device haptic volume buttons behaviour in order to use them for SeekBar manipulation
+     *
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(Globals.CURRENT_HAPTIC_BUTTONS_WIRING == Globals.MAIN_VOLUME_ID){
+        if (Globals.CURRENT_HAPTIC_BUTTONS_WIRING == Globals.MAIN_VOLUME_ID) {
             if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
                 mVolumeBar.setProgress(mVolumeBar.getProgress() + 1);
                 return true;
@@ -371,10 +409,13 @@ public class DeviceControlActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    //------------------------------------------------------------------------
+
+    /**
+     * Activate/ deactivate experimenter/ parental mode.
+     */
 
     private void toggleExperimenterMode() {
-        _countClick = 0;
+
         experimenterMode = !experimenterMode;
         SharedPreferences settings = getSharedPreferences(CONFIG_FILE, 0);
         SharedPreferences.Editor editor = settings.edit();
@@ -384,6 +425,13 @@ public class DeviceControlActivity extends Activity {
         Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
     }
 
+
+    /**
+     * Process the received data {@paramref data} and make the appropriate function call, depending on the {@paramref charact} input parameter
+     *
+     * @param charact characteristic UUID code
+     * @param data    a byte array of raw data received from the BLE device
+     */
     private void displayAbbiUiValues(String charact, byte[] data) {
         if (charact == null)
             return;
@@ -394,61 +442,62 @@ public class DeviceControlActivity extends Activity {
         int dataint = byteArrayToInt(data);
 
         switch (charact) {
-            case UUIDConstants.BatteryLevel_UUID:
+            case UUIDConstants.BATTERY_LEVEL_UUID:
                 Globals.batteryLevel = dataint;
                 updateBatteryLevel(dataint);
                 break;
-            case UUIDConstants.VolumeLevel_UUID:
+            case UUIDConstants.VOLUME_LEVEL_UUID:
                 Globals.volumeLevel = dataint;
                 updateMainVolumeLevel(dataint);
                 break;
-            case UUIDConstants.SoundCtrl_UUID:
+            case UUIDConstants.SOUND_CONTROL_UUID:
                 Globals.soundControlState = dataint;
                 boolean soundOn = Globals.soundControlState == Globals.SOUND_STATE_ON_ID;
                 boolean soundOff = Globals.soundControlState == Globals.SOUND_STATE_OFF_ID;
                 updateMuteSwitch(soundOff);
                 updateSoundCtrlButton(soundOn);
                 break;
-            case UUIDConstants.AudioMode_UUID:
+            case UUIDConstants.AUDIO_MODE_UUID:
                 Globals.audioMode = dataint;
                 updateAudioMode(dataint);
                 break;
-            case UUIDConstants.AudioContinuous_UUID:
+            case UUIDConstants.AUDIO_CONTINUOUS_UUID:
                 Globals.audioContinuous = new AudioContinuous(data);
                 break;
-            case UUIDConstants.AudioStream1_UUID:
+            case UUIDConstants.AUDIO_STREAM_1_UUID:
                 Globals.audioStream1 = new AudioIntermittent(data);
                 break;
-            case UUIDConstants.AudioStream2_UUID:
+            case UUIDConstants.AUDIO_STREAM_2_UUID:
                 Globals.audioStream2 = new AudioIntermittent(data);
                 break;
-            case UUIDConstants.AudioBPM_UUID:
+            case UUIDConstants.AUDIO_BPM_UUID:
                 Globals.audioBPM = dataint;
                 break;
-            case UUIDConstants.AudioPlayback_UUID:
+            case UUIDConstants.AUDIO_PLAYBACK_UUID:
                 Globals.audioPlayback = dataint;
                 break;
-            case UUIDConstants.Accelerometer_UUID:
+            case UUIDConstants.ACCELEROMETER_UUID:
 
                 displayData(String.valueOf(dataint));
-                //Todo: Do something with accelerometer data
-                // most probably the thing to do is something like:
-                //recognizeMovement(dataint);
+                //Todo: visualize accelerometer data
                 break;
-            case UUIDConstants.Gyroscope_UUID:
+            case UUIDConstants.GYROSCOPE_UUID:
                 displayData(String.valueOf(dataint));
-                //Todo: Do something with gyroscope data
+                //Todo: visualize gyroscope data
                 break;
-            case UUIDConstants.Magnetometer_UUID:
+            case UUIDConstants.MAGNETOMETER_UUID:
                 displayData(String.valueOf(dataint));
-                //Todo: do something with magnetometer data
+                //Todo: visualize magnetometer data
                 break;
             case UUIDConstants.IMU_UUID:
-                // for some reason thisl does not trigger: it seems there is no IMU data notification
+                // does not trigger with the regular ABBI devices; should work with the IMU device
                 break;
         }
     }
 
+    /**
+     * Update the application mode - parental/experimenter or user mode, depending on the value of {@link DeviceControlActivity#experimenterMode}
+     */
     private void changeAppModel() {
 
         //check current operational mode
@@ -469,13 +518,11 @@ public class DeviceControlActivity extends Activity {
         }
     }
 
-    /* Todo: develop a movement recognizer class (based on the android code from Charlotte)
-       Todo: develop the recognizeMovementMethod (below) that calls that class and selects sound to play
+    //Setter methods are implemented below and used to update UI values
+
+    /**
+     * @param deviceAddress this parameter is used to pass the device's MAC address
      */
-
-
-    //------------------------------------------------------------------------
-
     private void updateDeviceAddress(final String deviceAddress) {
         runOnUiThread(new Runnable() {
             @Override
@@ -485,6 +532,9 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param resourceId current connection state: connected/ disconnected
+     */
     private void updateConnectionState(final int resourceId) {
         runOnUiThread(new Runnable() {
             @Override
@@ -494,21 +544,26 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param data additional received data (sensor values)
+     */
     private void displayData(final String data) {
         if (data != null) {
             runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        mDataField.setText(data);
-                    }
-
+                @Override
+                public void run() {
+                    mDataField.setText(data);
+                }
 
 
             });
         }
     }
 
+    /**
+     * @param battLevel update the battery level using this integer from 0 to 100 %
+     */
     private void updateBatteryLevel(final int battLevel) {
         runOnUiThread(new Runnable() {
             @Override
@@ -518,6 +573,9 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param volLevel current volume level on the BLE device
+     */
     private void updateMainVolumeLevel(final int volLevel) {
         runOnUiThread(new Runnable() {
             @Override
@@ -527,6 +585,9 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param mute mute on/off
+     */
     private void updateMuteSwitch(final boolean mute) {
         runOnUiThread(new Runnable() {
             @Override
@@ -536,6 +597,9 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param soundOn sound emission on/off
+     */
     private void updateSoundCtrlButton(final boolean soundOn) {
         runOnUiThread(new Runnable() {
             @Override
@@ -545,6 +609,12 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
+    /**
+     * @param audioMode specify the audio mode code:
+     *                  - continuous
+     *                  - intermittent
+     *                  - playback (choose a .wav file from the list if the files have been uploaded to ABBI)
+     */
     private void updateAudioMode(final int audioMode) {
         runOnUiThread(new Runnable() {
             @Override
@@ -564,21 +634,17 @@ public class DeviceControlActivity extends Activity {
         });
     }
 
-    //------------------------------------------------------------------------
 
-    // Demonstrates how to iterate through the supported GATT Services/Characteristics.
-    // In this sample, we populate the data structure that is bound to the ExpandableListView
-    // on the UI.
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null) return;
 
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
             String uuid = gattService.getUuid().toString();
-            if (uuid.equals(UUIDConstants.Battery_Service_UUID)) {
+            if (uuid.equals(UUIDConstants.BATTERY_SERVICE_UUID)) {
                 ABBIGattReadWriteCharacteristics.batteryService = gattService;
                 ABBIGattReadWriteCharacteristics.readBatteryLevel();
-            } else if (uuid.equals(UUIDConstants.Custom_Service_UUID)) {
+            } else if (uuid.equals(UUIDConstants.CUSTOM_SERVICE_UUID)) {
                 ABBIGattReadWriteCharacteristics.customService = gattService;
                 ABBIGattReadWriteCharacteristics.readMainVolumeLevel();
                 ABBIGattReadWriteCharacteristics.readSoundCtrlMode();
@@ -588,7 +654,7 @@ public class DeviceControlActivity extends Activity {
                 ABBIGattReadWriteCharacteristics.readIntermittentStream(2);
                 ABBIGattReadWriteCharacteristics.readIntermittentBPM();
                 ABBIGattReadWriteCharacteristics.readWavFileId();
-            } else if (uuid.equals(UUIDConstants.Motion_Service_UUID)) {
+            } else if (uuid.equals(UUIDConstants.MOTION_SERVICE_UUID)) {
                 ABBIGattReadWriteCharacteristics.motionService = gattService;
                 ABBIGattReadWriteCharacteristics.readAccelerometer();
                 ABBIGattReadWriteCharacteristics.readGyroscope();
@@ -607,11 +673,10 @@ public class DeviceControlActivity extends Activity {
         return intentFilter;
     }
 
-    //------------------------------------------------------------------------
 
-    /// <summary>
-    /// Wires up local handlers delayed until situation is stable.
-    /// </summary>
+    /**
+     * Set up the handlers for seekbar, switches, standard buttons and radio buttons eventListeners
+     */
     protected void wireUpLocalHandlers() {
         mVolumeBar.setOnSeekBarChangeListener(handleVolumeChanged);
         mSoundCtrl.setOnCheckedChangeListener(handleSoundCtrlChanged);
@@ -621,6 +686,13 @@ public class DeviceControlActivity extends Activity {
         mButtonSoundProperties.setOnClickListener(handleSoundPropertiesClick);
     }
 
+    /**
+     * EVENT LISTENERS: implement state changed listeners for the UI components
+     */
+
+    /**
+     * Sonification and vibration on volume seekbar tap/click
+     */
     View.OnClickListener handleVolumeClicked = new View.OnClickListener() {
         public void onClick(View v) {
             Globals.CURRENT_HAPTIC_BUTTONS_WIRING = Globals.MAIN_VOLUME_ID;
@@ -632,15 +704,15 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+    /**
+     * Volume seekbar changed state listeners
+     */
     private CircularSeekBar.OnCircularSeekBarChangeListener handleVolumeChanged = new CircleSeekBarListener() {
         @Override
         public void onProgressChanged(CircularSeekBar seekBar, int progress, boolean fromUser) {
-            if (progress > 15) {
-                progress = UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.BRACELET_VOLUME_RANGE_MIN, Globals.BRACELET_VOLUME_RANGE_MAX, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX);
+            if (seekBar.getProgress() != 0) {
+                textViewVol.setText(Html.fromHtml("<b>Volume<br>" + UtilityFunctions.changeRangeMaintainingRatio(seekBar.getProgress(), Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_SOURCE_DB_VOLUME_RANGE_MIN, Globals.BRACELET_SOURCE_DB_VOLUME_RANGE_MAX) + " dB</b>"));
             }
-            textViewVol.setText(Html.fromHtml("<b>Volume<br>" + UtilityFunctions.changeRangeMaintainingRatio(progress, Globals.UI_VOLUME_RANGE_MIN, Globals.UI_VOLUME_RANGE_MAX, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN, Globals.BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX) + " dB</b>"));
-
-            ABBIGattReadWriteCharacteristics.writeMainVolumeLevel(seekBar.getProgress());
 
         }
 
@@ -651,26 +723,29 @@ public class DeviceControlActivity extends Activity {
 
         @Override
         public void onStopTrackingTouch(CircularSeekBar seekBar) {
-
+            ABBIGattReadWriteCharacteristics.writeMainVolumeLevel(seekBar.getProgress());
         }
     };
 
+    /**
+     * Sound emission on/off switch changed state listener
+     */
     private Switch.OnCheckedChangeListener handleSoundCtrlChanged = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked)
                 ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_ON_ID);
-            else
-                if(mMuteSwitch.isChecked()) {
-                    ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_OFF_ID);
-                }
-                else
-                {
-                    ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_TRIGGER_ID);
-                }
+            else if (mMuteSwitch.isChecked()) {
+                ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_OFF_ID);
+            } else {
+                ABBIGattReadWriteCharacteristics.writeSoundCtrlMode(Globals.SOUND_STATE_TRIGGER_ID);
+            }
         }
     };
 
+    /**
+     * User and parental/ experimenter mode switch event listener, calling {@link DeviceControlActivity#toggleExperimenterMode()} and {@link DeviceControlActivity#changeAppModel()}
+     */
     private Switch.OnCheckedChangeListener handleUserModeChanged = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -679,6 +754,9 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+    /**
+     * Handle the mute/unmute switch changes via the {@link ABBIGattReadWriteCharacteristics#writeSoundCtrlMode(int)} function
+     */
     private Switch.OnCheckedChangeListener handleMuteChanged = new Switch.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -689,6 +767,9 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+    /**
+     * Write sound mode changes to the ABBI bracelet whenever the radio group {@link DeviceControlActivity#mRadioSound} state changes
+     */
     private RadioGroup.OnCheckedChangeListener handleSoundModeChanged = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -697,6 +778,12 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
+    /**
+     * Handle audio playback mode changes when the {@link DeviceControlActivity#mButtonSoundProperties} is tapped:
+     * - continuous
+     * - intermittent sound emission
+     * - file playback if .wav files have been uploaded on the bracelet
+     */
     private Button.OnClickListener handleSoundPropertiesClick = new Button.OnClickListener() {
         @Override
         public void onClick(View buttonView) {
@@ -713,8 +800,11 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
-    //------------------------------------------------------------------------
-
+    /**
+     * Update the battery level
+     *
+     * @param n the current battery level in percentages
+     */
     protected void updateLevelIndicator(int n) {
 
         progressBar.setProgress(n);
@@ -722,7 +812,12 @@ public class DeviceControlActivity extends Activity {
 
     }
 
-
+    /**
+     * A function used to convert a byte[] to int
+     *
+     * @param data the input byte[]
+     * @return an int representation of the array
+     */
     public int byteArrayToInt(byte[] data) {
         int l = data.length;
         ByteBuffer bb = ByteBuffer.wrap(data);

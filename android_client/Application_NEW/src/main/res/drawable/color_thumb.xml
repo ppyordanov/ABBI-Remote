@@ -7,6 +7,5 @@
         android:height="40dp"
         android:endColor="#FF569BDA"
         android:startColor="#FF569BDA" />
-    <corners
-        android:radius="7dp"/>
+    <corners android:radius="7dp" />
 </shape>

@@ -1,7 +1,0 @@
-﻿<animation-list xmlns:android="http://schemas.android.com/apk/res/android" android:oneshot="false" android:id="@+id/AnimBatt">
-  <item android:drawable="@drawable/ic_battery_charged"
-        android:duration="1000" />
-  <item android:drawable="@drawable/ic_battery_full"
-        android:duration="1000" />
-</animation-list>
-<!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/anim/battery_animation.xml -->

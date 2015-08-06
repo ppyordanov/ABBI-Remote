@@ -115,29 +115,27 @@ public class BluetoothLeService extends Service {
 
             if (status == BluetoothGatt.GATT_SUCCESS) {
                 broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-            }
-            else{
+            } else {
                 Log.d(TAG, "onCharacteristicRead error: " + status);
             }
-            if(characteristicReadQueue.size() > 0)
+            if (characteristicReadQueue.size() > 0)
                 mBluetoothGatt.readCharacteristic(characteristicReadQueue.element());
 
         }
 
         @Override
         public void onCharacteristicWrite(BluetoothGatt gatt,
-                                         BluetoothGattCharacteristic characteristic,
-                                         int status) {
+                                          BluetoothGattCharacteristic characteristic,
+                                          int status) {
             // remove from queue
             characteristicWriteQueue.remove();
 
             if (status == BluetoothGatt.GATT_SUCCESS) {
 
-            }
-            else{
+            } else {
                 Log.d(TAG, "onCharacteristicRead error: " + status);
             }
-            if(characteristicWriteQueue.size() > 0)
+            if (characteristicWriteQueue.size() > 0)
                 mBluetoothGatt.writeCharacteristic(characteristicWriteQueue.element());
             else if (characteristicReadQueue.size() > 0)
                 mBluetoothGatt.readCharacteristic(characteristicReadQueue.element());
@@ -167,7 +165,7 @@ public class BluetoothLeService extends Service {
             // log the characteristic data
             final StringBuilder stringBuilder = new StringBuilder(data.length);
             stringBuilder.append(String.format("Received %SOUND_STATE_ON_ID data: ", ABBIGattReadWriteCharacteristics.lookup(uuid, "unknown")));
-            for(byte byteChar : data)
+            for (byte byteChar : data)
                 stringBuilder.append(String.format("%d ", byteChar));
             Log.d(TAG, stringBuilder.toString());
 
@@ -229,11 +227,10 @@ public class BluetoothLeService extends Service {
      * Connects to the GATT server hosted on the Bluetooth LE device.
      *
      * @param address The device address of the destination device.
-     *
      * @return Return true if the connection is initiated successfully. The connection result
-     *         is reported asynchronously through the
-     *         {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     *         callback.
+     * is reported asynchronously through the
+     * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
+     * callback.
      */
     public boolean connect(final String address) {
         if (mBluetoothAdapter == null || address == null) {
@@ -310,7 +307,7 @@ public class BluetoothLeService extends Service {
 
         //if there is only 1 item in the queue, then read it.  If more than 1, we handle asynchronously in the callback above
         //GIVE PRECEDENCE to descriptor writes.  They must all finish first.
-        if((characteristicWriteQueue.size() == 0) ) //&& (descriptorWriteQueue.size() == 0))
+        if ((characteristicWriteQueue.size() == 0)) //&& (descriptorWriteQueue.size() == 0))
             mBluetoothGatt.readCharacteristic(characteristicReadQueue.element());
     }
 
@@ -340,7 +337,7 @@ public class BluetoothLeService extends Service {
      * Enables or disables notification on a give characteristic.
      *
      * @param characteristic Characteristic to act on.
-     * @param enabled If true, enable notification.  False otherwise.
+     * @param enabled        If true, enable notification.  False otherwise.
      */
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
                                               boolean enabled) {

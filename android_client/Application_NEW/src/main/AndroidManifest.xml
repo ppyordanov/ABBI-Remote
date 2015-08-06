@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2013 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +16,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="proj.abbi"
     android:versionCode="2"
-    android:versionName="1.2" >
+    android:versionName="1.2">
 
     <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
 
@@ -34,15 +33,15 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:icon="@drawable/abbi_logo2"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
+        android:theme="@android:style/Theme.Holo.Light.DarkActionBar">
         <activity
             android:name=".device.DeviceScanActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +52,7 @@
             android:name=".device.DeviceControlActivity"
             android:launchMode="singleTask"
             android:label="@string/device_control"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <service
             android:name="uk.ac.gla.abbi.abbi_library.BluetoothLeService"
@@ -63,7 +62,7 @@
             android:name=".playback.ContinuousActivity"
             android:label="@string/title_activity_continuous"
             android:launchMode="singleTask"
-            android:parentActivityName=".device.DeviceControlActivity" >
+            android:parentActivityName=".device.DeviceControlActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
@@ -73,7 +72,7 @@
             android:label="@string/title_activity_intermittent"
             android:launchMode="singleTask"
             android:parentActivityName=".device.DeviceControlActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />
@@ -82,7 +81,7 @@
             android:name=".playback.PlaybackActivity"
             android:label="@string/title_activity_playback"
             android:launchMode="singleTask"
-            android:parentActivityName=".device.DeviceControlActivity" >
+            android:parentActivityName=".device.DeviceControlActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".device.DeviceControlActivity" />

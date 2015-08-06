@@ -19,7 +19,6 @@ public final class R {
         public static final int abc_slide_in_top=0x7f040007;
         public static final int abc_slide_out_bottom=0x7f040008;
         public static final int abc_slide_out_top=0x7f040009;
-        public static final int battery_animation=0x7f04000a;
     }
     public static final class attr {
         /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -1873,7 +1872,6 @@ containing a value of this type.
         public static final int volume=0x7f020054;
     }
     public static final class id {
-        public static final int AnimBatt=0x7f090090;
         public static final int PBtextView=0x7f090060;
         public static final int aboutText=0x7f090050;
         public static final int aboutView=0x7f09004f;
@@ -1940,12 +1938,12 @@ containing a value of this type.
         public static final int lockRatioCheckBox=0x7f090080;
         public static final int logDataLayout=0x7f09006e;
         public static final int media_actions=0x7f090086;
-        public static final int menu_connect=0x7f090092;
-        public static final int menu_disconnect=0x7f090093;
-        public static final int menu_info=0x7f090094;
-        public static final int menu_refresh=0x7f090091;
-        public static final int menu_scan=0x7f090095;
-        public static final int menu_stop=0x7f090096;
+        public static final int menu_connect=0x7f090091;
+        public static final int menu_disconnect=0x7f090092;
+        public static final int menu_info=0x7f090093;
+        public static final int menu_refresh=0x7f090090;
+        public static final int menu_scan=0x7f090094;
+        public static final int menu_stop=0x7f090095;
         public static final int middle=0x7f090015;
         public static final int middleView=0x7f090052;
         public static final int modeSwitch=0x7f090061;

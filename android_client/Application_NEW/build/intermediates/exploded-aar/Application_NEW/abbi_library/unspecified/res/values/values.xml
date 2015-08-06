@@ -40,8 +40,8 @@
     <string name="imageABBIDesc">Select an item from this list to connect to a Bluetooth device.</string>
     <string name="intermittent">Intermittent</string>
     <string name="intermittentSoundDesc">This option configures the sound output to be intermittent, further settings such as frequency and stream volume can be specified.</string>
-    <string name="label_data">Data:</string>
-    <string name="label_device_address">Device address:</string>
+    <string name="label_data">Sensor Data:</string>
+    <string name="label_device_address">Device Address:</string>
     <string name="label_state">State:</string>
     <!-- From: file:/C:/Users/Peter%20Yordanov/Desktop/Ppyordanov's%20files/GU_HCI_Summer_Project/ABBI/abbi/android_client/Application_NEW/abbi_library/src/main/res/values/base-strings.xml -->
     <eat-comment/>
@@ -93,11 +93,5 @@
     <style name="Widget.SampleMessage">
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
         <item name="android:lineSpacingMultiplier">1.1</item>
-    </style>
-    <style name="Widget.SampleMessageTile">
-        <item name="android:background">@drawable/tile</item>
-        <item name="android:shadowColor">#7F000000</item>
-        <item name="android:shadowDy">-3.5</item>
-        <item name="android:shadowRadius">2</item>
     </style>
 </resources>

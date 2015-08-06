@@ -1,33 +1,48 @@
-package uk.ac.gla.abbi.abbi_library.utilities;
+/*
+ * Copyright (C) 2015 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
-import android.media.AudioManager;
-import android.media.SoundPool;
+package uk.ac.gla.abbi.abbi_library.utilities;
 
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioContinuous;
 import uk.ac.gla.abbi.abbi_library.gatt_communication.AudioIntermittent;
-import uk.ac.gla.peteryordanov.abbi_library.gatt_communication.R;
 
 /**
+ * This class contains constants and global variables that can be used to manipulate
+ * the ABBI bracelet's sound emission properties.
+ * <p/>
  * Created by Peter Yordanov on 9.7.2015 ã..
  */
 public class Globals {
 
     //constants
 
-    /*
-    Intermittent sound
+    /**
+     * Intermittent sound
      */
     public static final int ABBI_INTERMITTENT_STREAM1_ID = 1;
     public static final int ABBI_INTERMITTENT_STREAM2_ID = 2;
 
-    /*
-    Sound controls
+    /**
+     * Sound controls
      */
     public static final int SOUND_STATE_OFF_ID = 0;
     public static final int SOUND_STATE_TRIGGER_ID = 1;
     public static final int SOUND_STATE_ON_ID = 2;
-    /*
-    Sound Playback Mode
+    /**
+     * Sound Playback Mode
      */
     public static final int CONTINUOUS_SOUND_MODE_ID = 0;
     public static final int INTERMITTENT_SOUND_MODE_ID = 1;
@@ -36,29 +51,31 @@ public class Globals {
     //digital to analogue conversion sampling rate
     public static final int DAC_SAMPLING_RATE = 22050;
 
-        /*
-    Intermittent sound frequency ranges
+    /**
+     Intermittent sound frequency ranges
      */
 
-    //(500 - 4000 Hz) carrier wave
+    /**
+     * Frequency range: (500 - 4000 Hz) carrier wave
+     */
     public static final int BRACELET_HZ_FREQUENCY_RANGE_MIN = 500;
     public static final int BRACELET_HZ_FREQUENCY_RANGE_MAX = 4000;
     public static final int UI_FREQUENCY_RANGE_MIN = 0;
     public static final int UI_FREQUENCY_RANGE_MAX = 35;
 
-    /*
-    Sound volume ranges
+    /**
+     * Sound volume ranges
      */
     public static final int BRACELET_VOLUME_RANGE_MIN = 0;
     public static final int BRACELET_VOLUME_RANGE_MAX = 65534;
     public static final int UI_VOLUME_RANGE_MIN = 0;
     public static final int UI_VOLUME_RANGE_MAX = 15;
 
-    public static final int BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MAX = 90;
-    public static final int BRACELET_SOURCE_DB_VOLUME_SOURCE_RANGE_MIN = 30;
+    public static final int BRACELET_SOURCE_DB_VOLUME_RANGE_MAX = 90;
+    public static final int BRACELET_SOURCE_DB_VOLUME_RANGE_MIN = 30;
 
-    /*
-    BPM range
+    /**
+     * BPM range
      */
     public static final int BRACELET_BPM_RANGE_MIN = 10;
     public static final int BRACELET_BPM_RANGE_MAX = 240;
@@ -66,7 +83,9 @@ public class Globals {
     public static final int UI_BPM_RANGE_MAX = 23;
 
 
-    // ABBI characteristic with default values
+    /**
+     * ABBI characteristic with default values
+     */
     public static int batteryLevel = 0;
     public static int volumeLevel = 20000;
     public static int soundControlState = SOUND_STATE_TRIGGER_ID;
@@ -77,9 +96,15 @@ public class Globals {
     public static int audioBPM = 120;
     public static int audioPlayback = 1;
 
-    //accessibility for circular seekbar
+    /**
+     * Accessibility: circular seekbar
+     */
     public static int CURRENT_HAPTIC_BUTTONS_WIRING = -1;
 
+
+    /**
+     * Identifiers for the widgets/layout components in the different sound modes
+     */
     public static final int MAIN_VOLUME_ID = 1;
 
     public static final int CONTINUOUS_VOLUME_ID = 10;
@@ -91,21 +116,26 @@ public class Globals {
     public static final int INTERMITTENT_FREQUENCY_2_ID = 23;
     public static final int INTERMITTENT_BEATS_PER_MINUTE_ID = 24;
 
-    //accessibility for vibration feedback
+    /**
+     * Accessibility: vibratory/haptic feedback
+     */
     public static final int VOLUME_VIBRATION_MS = 100;
     public static final int FREQUENCY_VIBRATION_MS = 500;
     public static final int BPM_VIBRATION_MS = 1000;
 
 
-    //sonification constants
-
+    /**
+     * Accessibility: sonification constants
+     */
     public static final int SOUND_STREAM1_LOOP = 0;
     public static final int SOUND_STREAM2_LOOP = 1;
     public static final float SOUND_PRIMARY_VOLUME = 1;
     public static final float SOUND_SECONDARY_VOLUME = (float) 0.5;
 
 
-    //ABBI playback sound files list
+    /**
+     * ABBI playback sound files list
+     */
     public static final String[] SOUND_FILES_PLAYLIST = {"short_explosion.wav",
             "elephant.wav",
             "whistling.wav",
