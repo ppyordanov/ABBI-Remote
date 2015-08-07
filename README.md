@@ -12,6 +12,6 @@ The general structure of the Android ABBI library follows below:
  - UUIDConstants.java - contains the UUID key constants for ABBI bluetooth communication
 
 - BluetoothLeService.java is essentially Hector's class used to facilitate the process of reading and writing GATT characteristics to and from ABBI
-- AboutDialogue is a helper class enabling developers to specify the aim of their application and include an About button in the ActionBar Android menu
+- AboutDialogue.java is a helper class enabling developers to specify the aim of their application and include an About button in the ActionBar Android menu
 
 Source: https://github.com/ppyordanov/ABBI-Remote
